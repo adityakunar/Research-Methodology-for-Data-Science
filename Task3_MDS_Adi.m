@@ -1,38 +1,32 @@
-%MDS Stuff
-
-T = readtable('~./Data/HighDimData.csv');
-
-dissimilarities = squareform(pdist(table2array(HighDimDat)));
-
+clear
+clc
+%read in the data in matlab.
+T = readtable('./Data/HighDimDat1.csv');
+%Compute the dissimilarity matrix.
+dissimilarities = squareform(pdist(table2array(T)));
+%Dissimilarity Matrix is a square matrix of dimensions m x m where m is the
+%size of the samples.
 size(dissimilarities); 
-
-m=5014;
-
+% computing the sample size.
+m=size(dissimilarities,1);
+% computing the centering matrix.
 centM = eye(m) - (1/m) * ones(m);
-
+% creating the gram matrix through the centering matrix. 
 Gram = -.5*centM*(dissimilarities)*centM;
-
-[eigvec, eigval] =eig(Gram,'matrix')
-
+%compute eigen values and eigen vectors of the gram matrix.
+[eigvec, eigval] =eig(Gram,'matrix');
+%computing the indices of the eigen values in decreasing order.
 [d,ind] = sort(diag(eigval),'descend');
-
-eigvalsorted = eigval(ind,ind)
-
+%sorting eigen values as per the computed indices.
+eigvalsorted = eigval(ind,ind);
+% similarly sorting the eigen vectors as per the computed indices.
 eigvecsorted = eigvec(:,ind);
+d= 2; % number of dimensions needed by the user.
+eigvalneed = eigvalsorted(1:d,1:d); % 2 is the dimension needed.
+eigvecneed = eigvecsorted(:,1:d); % 2 is the dimension needed.
+X = (sqrt(eigvalneed)*eigvecneed')'; % computing the coordinates of X in reduced dimensionality.
+plot(X(:,1),X(:,2),'o') %plotting the data in reduced dimensionality.
+dissimilarities_reduced = squareform(pdist(X)); %computing the dissimalirity in reduced feature space.
+stress = (dissimilarities - dissimilarities_reduced)^2; %computing the difference in dissimalirity and squaring it.
+overallstress= sum(stress,'all') % computing the final stress value as the sum of squared distances between solution and input distances.
 
-eigvalneed = eigvalsorted(1:2,1:2) % 2 is the dimension needed.
-
-
-eigvecneed = eigvecsorted(:,1:2) % 2 is the dimension needed.
-
-X = eigvecneed*sqrt(eigvalneed);
-
-plot(X(:,1),X(:,2),'o')
-
-
-
-dissimilarities_reduced = squareform(pdist(table2array(X)));
-
-stress = (dissimilarities - dissimilarities_reduced).*(dissimilarities - dissimilarities_reduced)
-
-overallstress= sum(stress,'all')
