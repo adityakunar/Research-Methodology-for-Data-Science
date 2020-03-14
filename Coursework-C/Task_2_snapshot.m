@@ -1,3 +1,5 @@
+%%
+% Full blown PCA
 data = readtable('./data/iris.data.csv');
 X = data( :, 1:4);
 labels = data(:, 5);
@@ -6,7 +8,6 @@ X = table2array(X);
 labels = table2array(labels);
 
 Y = center_points(X);
-size(Y,2)
 
 G = compute_gram_matrix(Y);
 
@@ -15,15 +16,47 @@ mapping = compute_mapping(G, Y, d);
 
 X_low_dim = X * mapping;
 
-plot_2d_scatter(X_low_dim, labels);
+plot_2d_scatter(X_low_dim, labels, "PCA with all samples");
 
 
 % #######################################################################################################
+%%
+
+% Test bench (prior sampling)
+[snapshot, snap_labs] = get_constant_prior_snapshot(X, labels, 0.2); % sample only 20% of datafrom each class
+snap_Y = center_points(snapshot);
+snap_G = compute_gram_matrix(snap_Y);
+snap_mapping = compute_mapping(snap_G, snap_Y, 2);
+plot_2d_scatter(X * snap_mapping, labels, 'Snapshot PCA with 20% sampling from each class')
+
+
+%% 
+
+function [snapshot, snap_labs] = get_constant_prior_snapshot(x, lab, sampling_ratio)
+    classes = unique(lab);
+    num_classes = size(classes, 1);
+    
+    snapshot = [];
+    snap_labs = [];
+    
+    s = RandStream('mlfg6331_64'); 
+    
+    for i = 1:num_classes
+        indexes = find(strcmp(lab, classes(i)));
+        k = sampling_ratio * size(indexes,1);
+        select_indexes = datasample(s, indexes, k);
+        
+        snapshot = vertcat(snapshot, x(select_indexes, :));
+        snap_labs = horzcat(snap_labs, (repelem(classes(i), size(select_indexes, 1))));
+    end
+    snap_labs = snap_labs';
+    %disp(snap_labs);
+end
 
 
 %%
 
-function plot_2d_scatter(x, labels)
+function plot_2d_scatter(x, labels, t)
     classes = unique(labels);
     num_classes = size(classes, 1);
     
@@ -39,7 +72,11 @@ function plot_2d_scatter(x, labels)
         text(c(1), c(2), classes(i))
         hold on
     end
+    title(t);
 end
+
+
+
 
 
 %%
