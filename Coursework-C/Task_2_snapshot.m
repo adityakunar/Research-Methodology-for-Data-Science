@@ -1,5 +1,3 @@
-%%
-
 data = readtable('./data/iris.data.csv');
 X = data( :, 1:(size(data,2)-1));
 labels = data(:, size(data,2));
