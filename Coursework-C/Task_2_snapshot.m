@@ -1,6 +1,6 @@
 %%
 % Full blown PCA
-data = readtable('./data/iris.data.csv');
+data = readtable('../Data/iris.data.csv');
 X = data( :, 1:4);
 labels = data(:, 5);
 
