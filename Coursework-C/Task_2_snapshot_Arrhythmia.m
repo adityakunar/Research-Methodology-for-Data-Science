@@ -1,22 +1,24 @@
 %%
 
-data = readtable('./data/iris.data.csv');
-X = data( :, 1:(size(data,2)-1));
+data = readmatrix('./data/arrhythmia.data.csv');
+X = data( :, 2:(size(data,2)-1));
+X(isnan(X)) = -100;
 labels = data(:, size(data,2));
 
-X = table2array(X);
-labels = table2array(labels);
+Y = center_points(X);
 
 %%
-disp(unique(labels))
-disp(size(X))
+disp(unique(labels));
+disp(size(X));
 
-class(labels)
+isa(labels, 'string')
+
+prism(5)
+
 
 %%
 % Full blown PCA
 
-Y = center_points(X);
 
 G = compute_gram_matrix(Y);
 
@@ -24,34 +26,33 @@ d=2; % reduced to 2 dimentions
 mapping = compute_mapping(G, Y, d);
 
 X_low_dim = X * mapping;
-
-plot_2d_scatter(X_low_dim, labels, "PCA with all samples");
+plot_2d_scatter(X_low_dim, labels,  labels, "PCA with all samples");
 
 
 % #######################################################################################################
 %%
 
 % Test bench (Consistent prior sampling)
-sample_rate = 0.03;
+sample_rate = 0.7;
 [snapshot, snap_labs] = get_constant_prior_snapshot(X, labels, sample_rate); % sample only 20% of datafrom each class
 snap_Y = center_points(snapshot);
 snap_G = compute_gram_matrix(snap_Y);
 snap_mapping = compute_mapping(snap_G, snap_Y, 2);
 
-plot_2d_scatter(snap_Y * snap_mapping, snap_labs, join(['Snapshot S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
-plot_2d_scatter(Y * snap_mapping, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
+plot_2d_scatter(snap_Y * snap_mapping, snap_labs, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
+plot_2d_scatter(Y * snap_mapping, labels, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
 
 %%
 
 % Test bench (Random sampling)
-sample_rate = 0.07;
+sample_rate = 0.5;
 [snapshot, snap_labs] = get_random_snapshot(X, labels, sample_rate); % sample only 20% of datafrom each class
 snap_Y = center_points(snapshot);
 snap_G = compute_gram_matrix(snap_Y);
 snap_mapping = compute_mapping(snap_G, snap_Y, 2);
 
-plot_2d_scatter(snap_Y * snap_mapping, snap_labs, join(['Snapshot S-PCA with ', string(sample_rate*100), '% Random sampling'], ""));
-plot_2d_scatter(Y * snap_mapping, labels, join(['Full Data S-PCA with ', string(sample_rate*100), '% Ransom sampling'], ""));
+plot_2d_scatter(snap_Y * snap_mapping, snap_labs, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% Random sampling'], ""));
+plot_2d_scatter(Y * snap_mapping, labels,labels,  join(['Full Data S-PCA with ', string(sample_rate*100), '% Ransom sampling'], ""));
 
 
 % #######################################################################################################
@@ -67,9 +68,13 @@ function [snapshot, snap_labs] = get_constant_prior_snapshot(x, lab, sampling_ra
     s = RandStream('mlfg6331_64'); 
     
     for i = 1:num_classes
-        indexes = find(strcmp(lab, classes(i)));
+        if isa(lab, 'double') || isa(lab, 'int')
+            indexes = find(lab == classes(i)); % type double
+        else
+            indexes = find(strcmp(lab, classes(i))); % type cell
+        end
         k = int16(sampling_ratio * size(indexes,1));
-        disp(k);
+        disp(k)
         select_indexes = datasample(s, indexes, k);
         
         snapshot = vertcat(snapshot, x(select_indexes, :));
@@ -93,22 +98,32 @@ end
 
 %%
 
-function plot_2d_scatter(x, labels, t)
-    classes = unique(labels);
+function plot_2d_scatter(x, lab, orig_lab, t)
+    classes = unique(orig_lab);
     num_classes = size(classes, 1);
     
-    colmap = ["r", "g", "b", "y", "m"];
+    colmap = lines(num_classes);
     
     figure();
     for i = 1:num_classes
-        indexes = find(strcmp(labels, classes(i)));
-    
-        scatter(x(indexes,1), x(indexes,2), colmap(i));
+        if isa(lab, 'double') || isa(lab, 'int')
+            indexes = find(lab == classes(i)); % type double
+        else
+            indexes = find(strcmp(lab, classes(i))); % type cell
+        end
+        
+        if size(indexes,1) <= 0
+            continue
+        end
+
+        scatter(x(indexes,1), x(indexes,2),[], colmap(i,:), 'DisplayName', string(classes(i)));
         hold on
         c = mean(x(indexes,:));
-        text(c(1), c(2), classes(i))
+       
+        text(c(1), c(2), string(classes(i)))
         hold on
     end
+    legend()
     title(t);
 end
 
