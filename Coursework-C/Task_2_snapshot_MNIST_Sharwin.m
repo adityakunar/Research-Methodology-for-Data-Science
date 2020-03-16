@@ -1,13 +1,18 @@
-%%
+clear all
+close all
 
-data = readmatrix('./data/arrhythmia.data.csv');
-X = data( :, 2:(size(data,2)-1));
-X(isnan(X)) = -100;
-labels = data(:, size(data,2));
+data = readtable('./data/mnist_train.csv');
+X = data( :, 2:(size(data,2)));
+labels = data(:, 1);
+
+X = table2array(X);
+labels = table2array(labels);
 
 Y = center_points(X);
 
-data_desc = "Arrhythmia ";
+data_desc = "MNIST ";
+
+
 %%
 disp(unique(labels));
 disp(size(X));
@@ -24,7 +29,7 @@ plot_2d_scatter(Y * mapping, labels,  labels, "PCA with all samples");
 %%
 
 % Test bench (Consistent prior sampling)
-sample_rate = 0.05;
+sample_rate = 0.1;
 [snapshot, snap_labs] = get_constant_prior_snapshot(X, labels, sample_rate); % sample only 20% of datafrom each class
 plot_labels_distribution(snap_labs, "Consistent class sampling target distribution");
 
