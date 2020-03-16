@@ -14,19 +14,19 @@ L = [2,4,6,8];
 
 Index = 1 : size(data,2);
 
-FirstL = data(L,:);
+FirstL = data(:,L);
 
 RMI = setdiff(Index,L);
 
-RestMat = data(RMI,:);
+RestMat = data(:,RMI);
 
-Newdata = [FirstL; RestMat];
+Newdata = [FirstL RestMat];
 
 Newdata = Newdata - mean(Newdata,1);
 
 Cov = cov(Newdata);
 
-l=4;
+l=size(L,2);
 
 NyCov = Cov(:,1:l);
 
