@@ -1,12 +1,12 @@
 clear
 clc
-%read in the data in matlab.
+%read in the data in matlab and segment out the data from the labels.
 X = readtable('BC.csv');
 T = X(:, 3:end);
 labels = X(:,2);
 labels =table2array(labels);
 Data = table2array(T);
-Centered_Data = ((Data - mean(Data))./std(Data)); %center the matrix with respect to mean.
+Centered_Data = ((Data - mean(Data))./std(Data)); %center the matrix with respect to mean and standardize.
 Gram = Centered_Data * Centered_Data';
 m = size(Data,1);
 [eigvec, eigval] =eig(((Gram)./m),'matrix'); % compute the eigen vectors and eigen values of the covariance matrix.
@@ -15,7 +15,7 @@ eigvalsorted = eigval(ind,ind); % sort the eigenvalue matrix using the indices.
 eigvecsorted = eigvec(:,ind);  % sort the eigvectors matrix using the indices. This will give us the principle components or modes 
                                %  in descending order of the amount of variance in that particular direction indicated by the modes.
 
-eigvalD = diag(sqrt(inv(eigvalsorted)))
+eigvalD = diag(eigvalsorted) 
 
 d = 2; %dimension we need to reduce to. 
 
@@ -24,11 +24,9 @@ basisvecs = zeros(size(Data,2),d); % initialise empty matrix to store basis vect
 % Extending the eigen vectors calculated from the gram matrix to the full
 % feature space dimensionality. 
 for i = 1:d
-    basis = eigvalD(i).*(Centered_Data' * eigvecsorted(:,i));
-    basisvecs(:,i)=(basis);
+    basis = (sqrt(eigvalD(i))^-1).*(Centered_Data' * eigvecsorted(:,i));
+    basisvecs(:,i)=(basis)/norm(basis);
 end
-
-
 
 % Orthogonal basis vectors as the dot product is very close to zero.
 dot(basisvecs(:,1),basisvecs(:,2))
@@ -47,8 +45,7 @@ var(Reduced_data)/sum(var(Reduced_data))
 % Showing that the new data has mutually uncorrelated columns.
 corrcoef(Reduced_data)
 
-
-plot_2d_scatter(Reduced_data, labels, "Snapshot WBCD");
+plot_2d_scatter(Reduced_data, labels, "Snapshot of WBCD");
 
 function plot_2d_scatter(x, labels, t)
     classes = unique(labels);
