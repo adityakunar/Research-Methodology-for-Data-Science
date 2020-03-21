@@ -11,7 +11,7 @@ labels =table2array(labels);
 
 data = table2array(T);
 
-L = [1,2];
+L = [1,2,3];
 
 l=size(L,2);
 
@@ -55,16 +55,22 @@ PCA = zeros(size(PCA_Mat));
 
 k = 1;   
 for a = L
-    PCA(a,:)=PCA_Mat(k,:);
+    PCA(a,:)=PCA_Mat(k,:)/norm(PCA_Mat(k,:));
     k=k+1;
 end
 
 for a = RMI
-    PCA(a,:)=PCA_Mat(k,:);
+    PCA(a,:)=PCA_Mat(k,:)/norm(PCA_Mat(k,:));;
     k=k+1;
 end
 
+dot(PCA(:,1),PCA(:,2))
+
 ReducedData = Newdata * PCA;
+
+corrcoef(ReducedData)
+
+var(ReducedData)/sum(var(ReducedData))
 
 plot_2d_scatter(ReducedData, labels, "MDS")
 
