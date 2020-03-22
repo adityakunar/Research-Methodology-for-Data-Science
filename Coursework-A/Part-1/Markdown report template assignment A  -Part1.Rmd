@@ -40,7 +40,7 @@ Thus, our aim is to observe the effect of music on depression by seeking a corre
 
 ##The Conceptual Model
 
-This conceptual model is in relation to both research questions. The main model depicting the relationship between independent variables and the dependent variables relates to the first research question. The moderating variable is modified to include age/sex to represent the second research question. 
+This conceptual model is in relation to both research questions. The main model depicting the relationship between independent variables and the dependent variable relates to the first research question. The moderating variable is modified to include age/sex to represent the second research question. 
 
 *Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music.
 *Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
@@ -49,6 +49,8 @@ This conceptual model is in relation to both research questions. The main model 
 
 
  
+ 
+
 
 
 
@@ -78,7 +80,7 @@ The set up of the experiment is as follows-:
 ## Measures
 
 Dependent Variable:
-HAM-D-:We will measure depression in subjects using Hamiltonian Depression Rating Scale (HAM-D) which has 21 questions, from which 17 are marked. It requires an interview style questionnaire for the subject where they are enquired about various mental and physical symptoms. It goes from asking about abdomainal pain and insomnia to attempted suicide. Depression is not a transient emotion like sadness, it is a long lasting condition with physical manifestations of the illness.
+HAM-D-:We will measure depression in subjects using Hamiltonian Depression Rating Scale (HAM-D) which has 21 questions, from which 17 are marked. It requires an interview style questionnaire for the subject where they are enquired about various mental and physical symptoms. It goes from asking about abdomainal pain and insomnia to attempted suicide.
 
 Independent Variable:
 Quantitative Musical Properties-: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, 	mean and standard deviation of spectral centroids.
