@@ -142,7 +142,7 @@ pairwise.t.test(semFrame$score, semFrame$Candidate,
                 paired = FALSE, p.adjust.method = "bonferroni")
 ```
 
-Due the fact that we are testing multiple hypothesis by comparing the sentiment scores of 5 different celebrities with one another, we need to correct for our alpha level accordingly. This is because as we perform more hypothesis tests, the probability of getting a significant result simply by chance also increases. Here we have corrected for this by using the famous Bonferroni correction. From this analysis we can see that most of the celebrities still have a significant difference in sentiment scores with a few notable exceptions such as Rihanna vs Donald Trump and Bill Gates vs Beyonce who do not have possess significant differences in mean sentiment scores.
+Due the fact that we are testing multiple hypothesis by comparing the sentiment scores of 5 different celebrities with one another, we need to correct for our alpha level accordingly. This is because as we perform more hypothesis tests, the probability of getting a significant result simply by chance also increases. Here we have corrected for this by using the famous Bonferroni correction. From this analysis we can see that most of the celebrities still have a significant difference in sentiment scores with a few notable exceptions such as Rihanna vs Donald Trump and Bill Gates vs Beyonce who do not possess significant differences in mean sentiment scores.
 
 
 ### Report section for a scientific publication
