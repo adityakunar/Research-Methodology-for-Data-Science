@@ -48,11 +48,6 @@ This conceptual model is in relation to both research questions. The main model 
 *Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
 
 
- 
- 
-
-
-
 
 ##Experimental Design 
 
@@ -105,4 +100,4 @@ For our experiment, we would like to recruit students studying in TU Delft. Thus
 
 3)Two independent samples t-test for comparing the means of HAM-D scores for people with treatment of music vs people without treatment of music. The first two tests are required to make sure that the assumptions of the t-test hold.
 
-4)Finally, as a last test to answer our second research question, we can perform an ANOVA for different age groups and sexes on the difference between the pre-test and post-test scores to see if sex/age has an affect on the effectiveness of the treatment. 
+4)Finally, as a last test to answer our second research question, we can perform an analysis of variance(ANOVA) for different age groups and sexes on the difference between the pre-test and post-test scores of the experimental group to see if sex/age has an affect on the effectiveness of the treatment. 
