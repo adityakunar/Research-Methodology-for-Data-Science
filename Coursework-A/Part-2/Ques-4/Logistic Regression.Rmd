@@ -6,7 +6,7 @@ output: html_notebook
 
 ### Conceptual model
 
-The underlying conceptual model here is to study if the age and estimated salary of a person can explain whether they purchased a product advertised online. 
+The underlying conceptual model here is to study if the age,gender and/or estimated salary of a person can explain whether they purchased a product advertised online. 
 
 
 ### Logistic regression
@@ -59,11 +59,11 @@ Here we see that variance of age for both genders is similar in our data. This i
 mydata$EstimatedSalary <-mydata$EstimatedSalary - mean(mydata$EstimatedSalary)
 mydata$Age <-mydata$Age - mean(mydata$Age)
 ```
-Here we re-scale our numeric predictors(age & estimated salary) by centring them around their mean. This allows us to interpret the estimates of our model as deviations from their mean values.
+First we re-scale our numeric predictors(age & estimated salary) by centring them around their mean. This allows us to interpret the estimates of our model as deviations from their mean values.
 
 
 
-Here we instantiate the base model and incrementally extend it to incorporate all the different combinations of our 3 predictor variables as described in the conceptual model i.e Age, Gender & Estimated Salary. This results in 9 models as can be seen below.
+Then we instantiate the base model and incrementally extend it to incorporate all the different combinations of our 3 predictor variables as described in the conceptual model i.e Age, Gender & Estimated Salary. This results in 8 models including the base model as can be seen below.
 
 ```{r}
 model0 <- glm(Purchased ~ 1, data = mydata, family = binomial())
@@ -93,7 +93,7 @@ pander(anova(model0,model3,test = "Chisq" ),
 
 
 
-From the above model comparisons using the anova function, we see that including gender does not have a significant impact to the fit of our model where as including age or estimated salary do. 
+From the above model comparisons using the anova function, we see that including gender does not have a significant impact to the fit of our model whereas including age or estimated salary do have a significant impact with a p value less than 1%. 
 
 
 Now that we know which models are relevant to the analysis, we can look at the summary of the correct model which includes only the significant predictors by using the summary function.
@@ -102,10 +102,9 @@ Now that we know which models are relevant to the analysis, we can look at the s
 pander(summary(model4),
        caption = "Summary results of model 1")
 ```
-Based on the results shown above, we can see the estimates of our model for age and estimated salary. We see that age has a more profound impact to purchases being made based on the estimates. We also suspect that since age and estimated salary are somewhat correlated, this could cause estimated salary to recieve a low estimate. Finally we can see that the standard errors are low which means are estimates can be considered reliable.
+Using the results shown above, we can see the estimates of the significant predictors in our model i.e age and estimated salary. We see based on the estimates that age has a more profound impact to purchases being made. We also suspect that since age and estimated salary are somewhat correlated, this could cause estimated salary to recieve a low estimate. Finally we can see that the standard errors are low which means are estimates can be considered reliable.
 
 ### Crosstable predicted and observed responses
-
 
 ```{r}
 mydata$Purchasedpred[fitted(model4) <=0.5] <- 0
@@ -119,21 +118,21 @@ CrossTable(mydata$Purchasedpred, mydata$Purchased, prop.r=FALSE, prop.c = FALSE,
 
 ```
 
-From this confusion matrix, we can see we made 19 type 1 errors or false positives and 39 type 2 errors or false negatives. 
+From this confusion matrix, we can see we made 19 type 1 errors or false positives and 39 type 2 errors or false negatives. Therefore our model is worse at predicting when an actual purchase has been made.
 
 The overall accuracy of our model is 83.84%. 
 
 ```{r}
 exp(model4$coefficients)
 ```
-Based on the results shown above we can say that on average the odds of a person making a purchase is 0.32, and these odds are 1.25 times higher based on a unit increase in age whereas it increases very little based on unit increase in estimated salary by about 1.0000344 times the average.  
+Based on the results shown above we can say that on average the odds of a person making a purchase is 0.32, and these odds are 1.25 times higher based on a unit increase in age whereas it increases very little based on unit increase in estimated salary by about 1.0000344 times the average odds.  
 
 ```{r}
 pander(exp(confint(model4)),
        caption = "95% confidence interval of odds ratio")
 ```
 
-From the results shown above, we see that the confidence interval is small for both our predictor variables indicating that the estimates are reliable with little random error.
+From the results shown above, we see that the confidence intervals is small for both our predictor variables indicating that the estimates are reliable with little random error.
 
 ### Examing Assumptions
 
@@ -149,7 +148,7 @@ Secondly, we test if the errors are indeed independent.
 ```{r}
 durbinWatsonTest(model4) 
 ```
-Based on the findings as shown above, we can fail to reject the null hypothesis(lag=1, Autocorrelation=0.05,D-W Statistic 1.9, p-value =0.294). Therefore the errors are indeed independent. 
+Based on the findings as shown above, we fail to reject the null hypothesis(lag=1, Autocorrelation=0.05,D-W Statistic 1.9, p-value =0.294). Therefore the errors are indeed independent. 
 
 Lastly, we wanted to check if there was some kind of linearity between the log odds and our independent variables. 
 ```{r}
@@ -203,6 +202,13 @@ mydata$stud.res<-rstudent(model4)
 mydata$dfbeta<-dfbeta(model4)
 troublingdata<-subset(mydata, (leverage > 3*.0083) | (abs(stud.res) > 2), 
        select = c("leverage", "stud.res", "dfbeta"))
+head(troublingdata)
 ```
 
-We have looked into the impact of individual cases as well by looking at the studentized residuals, the leverage values and the dfbeta values. We have calculated the leverage as the 1+(# of predictors)/# of observations. We check for values greater than 3 times the average. We have removed some of these points and noticed an improvement in the pseudo R squared values as well. Infact for this analysis we have used the cleaned dataset after removing values with high leverage based on the previous one as can be seen in the name of the file used too. 
+We have also looked into the impact of individual cases as well by looking at the studentized residuals, the leverage values and the dfbeta values. We have calculated the leverage as the 1+(# of predictors)/# of observations. We check for values greater than 3 times the average or for values with the absolute studentized residuals greater than 2. We have removed some of these points and noticed an improvement in the pseudo R squared values as well. Infact for this analysis we have used the cleaned dataset after removing values with high leverage based on the previous one as can be seen in the name of the file used too. 
+
+### Report section for a scientific publication
+
+Our goal in this section was to study the affect of our independent variables, namely age, gender and estimated salary on a binary categorical dependent variable("purchased") which indicated if a purchase was made by a user online or not. Therefore, we compared the fit of our null model with the fit of a model which included either age, gender or estimated salary. Based on our analysis, we found no significant main effect 
+χ2(Df=1, Deviance=0.58 , p.= 0.449) for gender, whereas there was a significant main effect on the fit of our model for age χ2(Df=1, Deviance=161.9 , p.< 0.01) and estimated salary χ2(Df=1, Deviance=46.97 , p.< 0.01) respectively. Thus, for our significant predictors we report that the exponents of the estimates for age and estimated salary are 1.2517688(95% CI, 1.194 to 1.324) and 1.0000344(95% CI, 1 to 1) with age having a stronger impact on average on the odds of a purchase made by a user. We also made sure to verify our assumptions about collinearity, independence of errors and linearity of our significant predictors with the predicted log odds of our model and we believe that they hold as the tolerance values for our predictors were greater that 0.2, the durbin-watson test (lag=1, Autocorrelation=0.05,D-W Statistic 1.9, p-value =0.294)allowed us to safely failed to reject the null hypothesis about indepent errors and based on our plots we can see the linearity between the predictors and the predicted log odds. Finally, we calculated the pseudo R squared values of our model as being (Hosmer and Lemeshow R^2) 0.457,(Cox and Snell R^2) 0.449 and (Nagelkerke R^2) 0.617 which indicate how well our data is explained through the model.  
+
