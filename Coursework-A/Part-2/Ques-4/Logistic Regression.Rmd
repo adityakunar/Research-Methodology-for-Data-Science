@@ -1,0 +1,208 @@
+---
+title: "Question 4 - Logistic regression analysis
+"
+output: html_notebook
+---
+
+### Conceptual model
+
+The underlying conceptual model here is to study if the age and estimated salary of a person can explain whether they purchased a product advertised online. 
+
+
+### Logistic regression
+
+```{r}
+mydata <- read.csv("D:\\Learning Material\\SDs\\Social_Network_Ads_Cleaned.csv")
+mydata$Purchased<-factor(mydata$Purchased, levels = c(0:1), labels = c("No","Yes"))
+cat("The levels of gender variable: \n")
+levels(mydata$Gender)
+cat("The levels of purchased variable: \n")
+levels(mydata$Purchased)
+cat("The summary of the data: \n")
+summary(mydata)
+```
+As taught in class, we made sure to factorize the categorical variable namely gender and purchased as can be seen above. We were also interested in looking at the summary of the data to understand it's contents. 
+
+
+### Visualizing the data
+
+
+```{r}
+ggplot(mydata, aes(Purchased, ..count..)) + geom_bar(aes(fill = Gender), position = "dodge")
+```
+Here we see that in general women have made more online purchases than men. And that in general there are less successful purchases online.
+
+```{r}
+plot(mydata$Purchased, mydata$Age, xlab = "Purchased", ylab = "age")
+```
+Here we clearly see that older people make more purchases. 
+
+```{r}
+plot(mydata$Purchased, mydata$EstimatedSalary, xlab = "Purchased", ylab = "Estimated Salary")
+```
+Here we see that usually people with more money make more purchases which seems to make sense. 
+
+```{r}
+scatter.smooth(mydata$EstimatedSalary,mydata$Age)
+```
+Here as expected we see that there is a slight positive correlation between age and estimated salary. People with more money are usually also older. 
+
+```{r}
+plot(mydata$Gender, mydata$Age, xlab = "Gender", ylab = "Age")
+```
+Here we see that variance of age for both genders is similar in our data. This is good because we can truly consider gender to be independent of age. 
+
+### Generalised Linear Models
+
+
+```{r}
+mydata$EstimatedSalary <-mydata$EstimatedSalary - mean(mydata$EstimatedSalary)
+mydata$Age <-mydata$Age - mean(mydata$Age)
+```
+Here we re-scale our numeric predictors(age & estimated salary) by centring them around their mean. This allows us to interpret the estimates of our model as deviations from their mean values.
+
+
+
+Here we instantiate the base model and incrementally extend it to incorporate all the different combinations of our 3 predictor variables as described in the conceptual model i.e Age, Gender & Estimated Salary. This results in 9 models as can be seen below.
+
+```{r}
+model0 <- glm(Purchased ~ 1, data = mydata, family = binomial())
+model1 <- glm(Purchased ~ Gender , data = mydata, family = binomial())
+model2 <- glm(Purchased ~ Age, data = mydata, family = binomial())
+model3 <- glm(Purchased ~ EstimatedSalary, data = mydata, family = binomial())
+model4 <- glm(Purchased ~ Age+EstimatedSalary, data = mydata, family = binomial())
+model5 <- glm(Purchased ~ Gender+Age, data = mydata, family = binomial())
+model6 <- glm(Purchased ~ Gender + EstimatedSalary, data = mydata, family = binomial())
+model7 <- glm(Purchased ~ Gender + Age + EstimatedSalary, data = mydata, family = binomial())
+    
+pander(anova(model0,model1,test = "Chisq" ),
+       caption = "The effect of adding gender.")
+```
+
+
+```{r}
+pander(anova(model0,model2,test = "Chisq" ),
+       caption = "The effect of adding Age.")
+```
+
+
+```{r}
+pander(anova(model0,model3,test = "Chisq" ),
+       caption = "The effect of adding Estimated Salary.")
+```
+
+
+
+From the above model comparisons using the anova function, we see that including gender does not have a significant impact to the fit of our model where as including age or estimated salary do. 
+
+
+Now that we know which models are relevant to the analysis, we can look at the summary of the correct model which includes only the significant predictors by using the summary function.
+
+```{r}
+pander(summary(model4),
+       caption = "Summary results of model 1")
+```
+Based on the results shown above, we can see the estimates of our model for age and estimated salary. We see that age has a more profound impact to purchases being made based on the estimates. We also suspect that since age and estimated salary are somewhat correlated, this could cause estimated salary to recieve a low estimate. Finally we can see that the standard errors are low which means are estimates can be considered reliable.
+
+### Crosstable predicted and observed responses
+
+
+```{r}
+mydata$Purchasedpred[fitted(model4) <=0.5] <- 0
+mydata$Purchasedpred[fitted(model4) > 0.5] <- 1
+mydata$Purchasedpred<-factor(mydata$Purchasedpred, levels = c(0:1), labels = c("No","Yes"))
+CrossTable(mydata$Purchasedpred, mydata$Purchased, prop.r=FALSE, prop.c = FALSE, 
+           prop.t = FALSE, 
+           prop.chisq=FALSE, format = "SPSS",  
+           fisher = FALSE, chisq = TRUE, 
+           expected = FALSE, sresid = FALSE)
+
+```
+
+From this confusion matrix, we can see we made 19 type 1 errors or false positives and 39 type 2 errors or false negatives. 
+
+The overall accuracy of our model is 83.84%. 
+
+```{r}
+exp(model4$coefficients)
+```
+Based on the results shown above we can say that on average the odds of a person making a purchase is 0.32, and these odds are 1.25 times higher based on a unit increase in age whereas it increases very little based on unit increase in estimated salary by about 1.0000344 times the average.  
+
+```{r}
+pander(exp(confint(model4)),
+       caption = "95% confidence interval of odds ratio")
+```
+
+From the results shown above, we see that the confidence interval is small for both our predictor variables indicating that the estimates are reliable with little random error.
+
+### Examing Assumptions
+
+First we test the multi-collinearity assumption of our model.
+
+```{r}
+1/vif(model4) 
+```
+We can see that the tolerance values are larger that 0.2 and so there is no indication of collinearity.
+
+
+Secondly, we test if the errors are indeed independent. 
+```{r}
+durbinWatsonTest(model4) 
+```
+Based on the findings as shown above, we can fail to reject the null hypothesis(lag=1, Autocorrelation=0.05,D-W Statistic 1.9, p-value =0.294). Therefore the errors are indeed independent. 
+
+Lastly, we wanted to check if there was some kind of linearity between the log odds and our independent variables. 
+```{r}
+Yhat    <- fitted(model4)
+scatter.smooth(mydata$Age,Yhat)
+```
+```{r}
+scatter.smooth(mydata$EstimatedSalary,Yhat)
+```
+
+Therefore, we see that the log odds have a somewhat linear trend to the predictor variables. Thereby verifying our assumptions.
+
+
+### Pseudo R squared Value
+
+```{r}
+logisticPseudoR2s <- function(LogModel) {
+        
+        dev <- LogModel$deviance 
+        
+        nullDev <- LogModel$null.deviance 
+        
+        modelN <-  length(LogModel$fitted.values)
+        
+        R.l <-  1 -  dev / nullDev
+        
+        R.cs <- 1- exp ( -(nullDev - dev) / modelN)
+        
+        R.n <- R.cs / ( 1 - ( exp (-(nullDev / modelN))))
+        
+        cat("Pseudo R^2 for logistic regression\n")
+        
+        cat("Hosmer and Lemeshow R^2  ", round(R.l, 3), "\n")
+        
+        cat("Cox and Snell R^2        ", round(R.cs, 3), "\n")
+        
+        cat("Nagelkerke R^2           ", round(R.n, 3),    "\n")
+        
+}
+
+logisticPseudoR2s(model4)
+```
+Here we present the pseudo R squared values for our model. The pseudo R square value is between 0 and 1 and gives an indication for how well our model can explain the data or how good our model fit is. It's a useful metric to compare different models. 
+
+
+### Impact Analysis of Individual Cases.
+
+```{r}
+mydata$leverage<-hatvalues(model4)
+mydata$stud.res<-rstudent(model4)
+mydata$dfbeta<-dfbeta(model4)
+troublingdata<-subset(mydata, (leverage > 3*.0083) | (abs(stud.res) > 2), 
+       select = c("leverage", "stud.res", "dfbeta"))
+```
+
+We have looked into the impact of individual cases as well by looking at the studentized residuals, the leverage values and the dfbeta values. We have calculated the leverage as the 1+(# of predictors)/# of observations. We check for values greater than 3 times the average. We have removed some of these points and noticed an improvement in the pseudo R squared values as well. Infact for this analysis we have used the cleaned dataset after removing values with high leverage based on the previous one as can be seen in the name of the file used too. 
