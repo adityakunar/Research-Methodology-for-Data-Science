@@ -1,0 +1,30 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+# Introduction
+
+To read the data and understand the distribution of observations we did the following.
+```{r}
+library('ggplot2')
+library('emmeans')
+data = read.csv('../data/data.csv')
+table(data$model, data$TeD)
+```
+
+
+
+```{r}
+plot(data$model, data$score, main="Model Scores", xlab='models', ylab='score')
+```
+ We see that models that are trained/refined partwise in transferlearning perform better on average than the baselines. 
+
+
+```{r}
+ggplot(data, aes(score)) + geom_histogram(binwidth = 0.01) + facet_wrap(~model)
+```
+
+
+
