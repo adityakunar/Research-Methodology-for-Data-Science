@@ -1,9 +1,10 @@
 ---
-title: "R Notebook"
+title: "CS4125 Coursework B"
 output:
   pdf_document: default
   html_notebook: default
 ---
+By Aditya Kunar,  Pavel Hoogland,  Sharwin Bobde
 
 
 # Introduction
