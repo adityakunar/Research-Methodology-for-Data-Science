@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 
@@ -14,17 +16,25 @@ data = read.csv('../data/data.csv')
 table(data$model, data$TeD)
 ```
 
+We see the Baselines are tested once against the testv sets. The transfer learning methods have been tested multiple times on the test sets to see the efeect of use of different training sets on the score. i.e. does the use of specific training sets help certain tasks (TeD).
 
 
 ```{r}
 plot(data$model, data$score, main="Model Scores", xlab='models', ylab='score')
 ```
- We see that models that are trained/refined partwise in transferlearning perform better on average than the baselines. 
+ If we naively observe the data, we see that models that are trained/refined partwise in transferlearning perform better on average than the baselines. 
 
-
+Lets see if this is valid.
 ```{r}
 ggplot(data, aes(score)) + geom_histogram(binwidth = 0.01) + facet_wrap(~model)
 ```
+We see that the data is not normally distributed and we cannot naively derive conclusions from simple statistical analysis (like means) and linear models.
+We need to consider the following
 
+- Effect of multiple IVs on the score.
+- Interaction effect of different IVs.
+- Type of task (TeD) we are testing on.
+- Significance of the use of particular Method on test set.
+- Effect of particular training set on the scoring of a test set by a model.
 
 
