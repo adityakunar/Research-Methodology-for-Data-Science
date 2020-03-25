@@ -1,0 +1,54 @@
+---
+title: "RQ-3 Coursework B"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+
+We can do a simple naive look at the means of the test score of each combination of TrDs
+```{r}
+#library(emmeans)
+#setwd("~/SeminarDataScience/semimar-data-sci/Coursework-B/RQ-3")
+means = aggregate(score~TrD1+TrD2+TrD3+TrD4+TrD5+TrD6+TrD7+TrD8,d,mean)
+
+
+```
+
+We can look at which combination of training sets achieves the maximum test score.
+```{r}
+which.max(aggregate(score~TrD1+TrD2+TrD3+TrD4+TrD5+TrD6+TrD7+TrD8,d,mean)$score)
+means[140,]
+```
+
+
+We can also observe the single Training data set models and see how they perform
+```{r}
+t1 = d[d$TrD1 == 1 & d$model=="S", ]
+mean(t1$score)
+t2 = d[d$TrD2 == 1 & d$model=="S", ]
+mean(t2$score)
+t3 = d[d$TrD3 == 1 & d$model=="S", ]
+mean(t3$score)
+t4 = d[d$TrD4 == 1 & d$model=="S", ]
+mean(t4$score)
+t5 = d[d$TrD5 == 1 & d$model=="S", ]
+mean(t5$score)
+t6 = d[d$TrD6 == 1 & d$model=="S", ]
+mean(t6$score)
+t7 = d[d$TrD7 == 1 & d$model=="S", ]
+mean(t7$score)
+t8 = d[d$TrD8 == 1 & d$model=="S", ]
+mean(t8$score)
+
+
+sub= subset(d,model=="S")
+#m = lm(score ~ model+TrD1+TrD2, sub)
+#summary(m)
+#confint(m)
+
+#t1 = d[d$TrD1 == 1 & d$model=="S", ]
+```
+
