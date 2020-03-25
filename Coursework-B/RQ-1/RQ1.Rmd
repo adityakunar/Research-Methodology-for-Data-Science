@@ -43,13 +43,13 @@ data$TL <- factor(data$TL)
 
 ```
 
-For our analysis we  first pretend we only have model scores of when transfer learning was used and when it wasn't. And so, to check for a difference in mean scores, we can do independent sample t test for which we need to make sure that our data is normally distributed. Here the null hypothesis is that there is no difference in mean scores between the two groups and the alternate hypthosis is that there is a difference in mean scores. 
+For our analysis we  first pretend we only have model scores of when transfer learning was used and when it wasn't without any other additional information. And so, to check for a difference in mean scores, we can do an independent sample t test for which we need to make sure that our data is normally distributed. Here the null hypothesis is that there is no difference in mean scores between the two groups and the alternate hypthosis is that there is a difference in mean scores. 
 
 ```{r}
 ggdensity(TL, 
           main = "Density plot of Transfer Learning Used",
           xlab = "Scores")
-```
+```	
 ```{r}
 ggdensity(No_TL, 
           main = "Density plot of No Transfer Learning Used",
