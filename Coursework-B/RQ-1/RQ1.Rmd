@@ -1,16 +1,21 @@
 ---
-title: "Research Question 1 Notebook"
+title: "Research Question 1"
 output: html_notebook
 ---
 
-## Research Question - How much does transfer learning improve over typical non-transfer learning?
+*Question - How much does transfer learning improve over typical non-transfer learning?*
 
+For answering this question lets observe the frequency of observations first.
 ```{r}
-data<- read.csv("D:\\Learning Material\\SDs\\data.csv") #Read in the data in R.
+library('ggplot2')
+library('emmeans')
+library('ggpubr')
+data<- read.csv("../data/data.csv") #Read in the data in R.
 table(data$model)# Count the data points for each model.
 ```
 Here we see that we only have 21 points for the first scenario which involves no transfer learning. Whereas with transfer learning, there are many more data points.
 
+Lets naively observe the means for the models.
 ```{r}
 aggregate(score~model, data, mean) # We can look at the means for each model.
 ```
@@ -18,7 +23,7 @@ This gives the mean scores for each model. We can see that the MN model has the 
 ```{r}
 aggregate(score~TeD, data,mean) # We can also look at the means for each test dataset. 
 ```    
-Here we see the scores aggregated on the test datasets. We know that TeD1 to TeD4 are classification datasets and their mean scores are found to be higher than for the other tasks such as regression and recommendation. Infact we see the lowest performance for the recommendation task dataset i.e TeD5. We are beginning to realise that the mean score of any model(transfer learning or not) might also be impacted by the test dataset as well. 
+Here we see the scores aggregated on the test datasets. We know that TeD1 to TeD4 are classification datasets and their mean scores are found to be higher than for the other tasks such as regression and recommendation. Infact we see the lowest performance for the recommendation task dataset i.e TeD5. We are beginning to realise that the *mean score of any model(transfer learning or not) might also be impacted by the test dataset as well*. 
 
 
 ```{r}
@@ -68,6 +73,8 @@ shapiro.test(No_TL)
 Likewise, we see that it's not normally distributed(p. < 0.001) for when transfer learning was not used as well.
 
 ```{r}
+library(pander)
+library(car)
 pander(leveneTest(data$score, data$TL, center=median)) 
 ```    
 We also checked for homogeneity of variance. We see that with a p value close to 1, the spread around the mean scores for both groups of data is homogeneous. 
