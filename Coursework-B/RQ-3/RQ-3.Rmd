@@ -1,18 +1,20 @@
 ---
-title: "RQ-3 Coursework B"
-output: html_notebook
+output:
+  html_notebook: default
+  pdf_document: default
 ---
+# Research Question 2
 
 
-
+## Observing Data
 We perform a simple look at the means of the test score of each combination of TrDs. We can from this look at which combination of training sets achieves the maximum test score.
 ```{r}
 #library(emmeans)
 #setwd("~/SeminarDataScience/semimar-data-sci/Coursework-B/RQ-3")
+d = read.csv('../data/data.csv')
 means = aggregate(score~TrD1+TrD2+TrD3+TrD4+TrD5+TrD6+TrD7+TrD8,d,mean)
 
-which.max(means$score)
-means[140,]
+head(means)
 ```
 From this we can see that the test scores of the combination of TrD 2,3,5,7,8 give the best generalizable performance.
 
@@ -32,9 +34,10 @@ boxplot(t1$score,t2$score,t3$score,t4$score,t5$score,t6$score,t7$score,t8$score)
 
 ```
 
-From this analysis we can see that for the simple models, those trained on either TrD 5,7,8 have the best average general performance for all testdatasets. Important to note is that the scores when using TrD 2 show a significantly larger variance when compared to the other sets.
+From this analysis we can see that for the simple models, those trained on either TrD 5,7,8 have the best average general performance for all testdatasets. Important to note is that the scores when using TrD 2 show a observably larger variance when compared to the other sets.
 
-Next we make a linear model with the score and all the training data sets.
+## Linear models
+Now we make a linear model with the score and all the training data sets.
 
 ```{r}
 m <- lm(score~TrD1+TrD2+TrD3+TrD4+TrD5+TrD6+TrD7+TrD8, d)
@@ -43,8 +46,9 @@ confint(m)
 
 ```  
 
-
 From this we can see that the addition of the training data sets TrD 3,4,6 is generally not of relevance for the performance score. Interestingly 4 and 6 also don't appear in the combination of sets with the maximum average test score.
+
+## Subset analysis
 ```{r}
 sub1= subset(d,TrD1==1)
 sub2= subset(d,TrD2==1)
@@ -57,12 +61,12 @@ sub8= subset(d,TrD8==1)
 boxplot(sub1$score,sub2$score,sub3$score,sub4$score,sub5$score,sub6$score,sub7$score,sub8$score)
 
 ```
-The general performance of a subset seems to average out to the same.
-
 
 We visualize the subsets of all combinations of TrD1 and TrD2 and plot their scores against the test scores. Over all for most training sets the scores are similar. Although for TrD2 there does seem to be a slightly higher score when performed on TeD1
+The general performance of a subset seems to average out to the same.
+
 ```{r}
-plot(sub1$TeD, sub1$score, xlab ="Dataset", ylab ="Scores")
-plot(sub2$TeD, sub2$score, xlab ="Dataset", ylab ="Scores")
+plot(sub1$TeD, sub1$score, xlab ="TeD", ylab ="Scores", main-"")
+plot(sub2$TeD, sub2$score, xlab ="TeD", ylab ="Scores", main="")
 ```
 
