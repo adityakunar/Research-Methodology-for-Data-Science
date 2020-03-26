@@ -29,7 +29,7 @@ t6 = d[d$TrD6 == 1 & d$model=="S", ]
 t7 = d[d$TrD7 == 1 & d$model=="S", ]
 t8 = d[d$TrD8 == 1 & d$model=="S", ]
 
-boxplot(t1$score,t2$score,t3$score,t4$score,t5$score,t6$score,t7$score,t8$score)
+boxplot(t1$score,t2$score,t3$score,t4$score,t5$score,t6$score,t7$score,t8$score,names = c("1","2","3","4","5","6","7","8"), xlab ="TrD", ylab ="Scores", main="Overall Performance of single training set models")
 
 
 ```
@@ -59,7 +59,7 @@ sub5= subset(d,TrD5==1)
 sub6= subset(d,TrD6==1)
 sub7= subset(d,TrD7==1)
 sub8= subset(d,TrD8==1)
-boxplot(sub1$score,sub2$score,sub3$score,sub4$score,sub5$score,sub6$score,sub7$score,sub8$score)
+boxplot(sub1$score,sub2$score,sub3$score,sub4$score,sub5$score,sub6$score,sub7$score,sub8$score,names = c("1","2","3","4","5","6","7","8"), xlab ="TrD Selected", ylab ="Scores", main="Overall Performance of subsets of all data on a certain training set")
 
 ```
 From this we can see that the addition of a single training set has no effect on the overall average performance when considering all Test data sets and models.
@@ -71,4 +71,9 @@ The general performance of a subset seems to average out to the same. For the ot
 plot(sub1$TeD, sub1$score, xlab ="TeD", ylab ="Scores", main= "Performance of subset of all data with TrD1 vs TestData set")
 plot(sub2$TeD, sub2$score, xlab ="TeD", ylab ="Scores", main="Performance of subset of all data with TrD2 vs TestData set")
 ```
+## Conclusion
 
+When looking at the combinations of training sets that give the best average performance it can be seen that most of the highest ranking combinations contain the dataset TrD2 and TrD8. This can mean that for good performance on all test sets these test sets are important. 
+Doing an analysis of the performances of the single training set models we can observe that some single training set have a higher average performance in general. TrD 5,7 and 8 seem to provide the best performance. Notably 2, has a very low mean performance but also very high variance.
+From the analysis of the subset we can see that over all models and combinations of training data sets the performance averages out to the same.
+From the analysis it looks like the choice of a single model training set does have some effect on the general performance but when averaged out over all combinations there is no effect on the inclusion of a training set.
