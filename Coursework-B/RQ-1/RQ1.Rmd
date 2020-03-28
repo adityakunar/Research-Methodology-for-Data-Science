@@ -44,8 +44,6 @@ plot(data$TeD, data$score, xlab ="Dataset", ylab ="Scores")
 Here we show a visual representation for our arguments made before in the previous section.  
 
 
-## Blind Analysis of models with and without Transfer Learning
-
 ```{r}
 # storing all the no transfer learning scores.
 No_TL <- data$score[data$model=="B1"|data$model=="B2"|data$model=="B3"] 
@@ -58,62 +56,6 @@ data$TL <- with(data, ifelse(model=="B1"|model=="B2"|model=="B3","No_TL", "Yes_T
 data$TL <- factor(data$TL)
 ```
 
-For our analysis we  first pretend we only have model scores of when transfer learning was used and when it wasn't without any other additional information. And so, to check for a difference in mean scores, we can do an independent sample t test for which we need to make sure that our data is normally distributed. Here the null hypothesis is that there is no difference in mean scores between the two groups and the alternate hypthosis is that there is a difference in mean scores. 
-
-### Normality Analysis
-```{r}
-ggdensity(TL, 
-          main = "Density plot of Transfer Learning Used",
-          xlab = "Scores")
-```	
-```{r}
-ggdensity(No_TL, 
-          main = "Density plot of No Transfer Learning Used",
-          xlab = "Scores")
-```    
-Based on the density plots, we can say that the scores for both models with transfer learning and without don't seem to be normally distributed.
-
-```{r}
-shapiro.test(TL)
-```
-We see that based on the shapiro test(p. < 0.001) that the scores for when transfer learning was used are not normally distributed.
-
-```{r}
-shapiro.test(No_TL)
-```
-Likewise, we see that it's not normally distributed(p. < 0.001) for when transfer learning was not used as well.
-
-
-### Homogeneity of variance
-```{r}
-pander(leveneTest(data$score, data$TL, center=median)) 
-```    
-We also checked for homogeneity of variance. We see that with a p value close to 1, the spread around the mean scores for both groups of data is homogeneous. 
-
-### Parametric Test(Two independent sample T test.)
-```{r}
-t.test(score~TL, data)
-```
-We know that the data is not normally distributed according to the assumptions of the parametric t.test and so with a grain of salt we can say that indeed there is a significant difference(t=-2.26, df=20.307, p.< 0.05) in mean scores of our models when transfer learning was used or not. We can also see that on average transfer learning models have higher scores. 
-
-
-### Non Parametric Test (Wilcox signed rank test.)
-However, we thought it was best to also run a non parametric test as the data was in fact not normally distributed.
-```{r}
-wilcox.test(score~TL, data)
-```
-Here we see another significant result(W = 20624, p.< 0.05). Therefore we conclude that the our data for models with transfer learning and without are nonidentical populations. 
-
-### Non Parametric Test (Kruskal wallis test.)
-```{r}
-kruskal.test(score~TL, data)
-```
-Likewise for completeness we also performed another non parametric test and observed a significant result (Chi-Squared = 7.22,df=1 p.< 0.05). similarly we conclude that the our data for models with transfer learning and without are indeed nonidentical populations. 
-
-
-### Conclusion for the blind analysis
-
-So based on our simple blindfolded analysis, *we know that transfer learning does have a significant impact on the scores of our model*. 
 
 ## Exploring interaction effects of Test Datasets.
 
