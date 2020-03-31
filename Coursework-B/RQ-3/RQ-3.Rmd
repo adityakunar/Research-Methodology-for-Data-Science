@@ -1,7 +1,7 @@
 ---
 output:
-  html_notebook: default
   pdf_document: default
+  html_notebook: default
 ---
 # Research Question 2
 
@@ -17,6 +17,18 @@ head(means[order(-means$score),], n=25)
 
 ```
 From this we can see that most of the combinations with the highest performance scores contain the Training Sets TrD 2 and 8.
+Further we can see that the top 3 combinations also contain TrD 3 and 5 potentially making these training sets also relevant. However this can also be a result of simply the use of more training sets improving the score.
+
+Thus we want to analyse the effect of the amount of training sets used on the performance.
+```{r}
+d$TrainCount <-  apply(d[c(2:9)], 1, function(x) length(which(x==1)))
+boxplot(score~TrainCount, d,xlab ="Amount of Training Sets", ylab ="Scores")
+modelCount <- lm(score~TrainCount,d)
+summary(modelCount)
+confint(modelCount)
+```
+Looking at the boxplot we can see that the amount of training sets used in general indeed has an effect on the score, although this effect seems to be minimal after 3 training sets used. Additionally also the linear model shows a sufficiently low p value, thus we can reject the null-hypothesis, meaning that there is a relevant relation between the score and the amount of training sets used. In this case the relation is one where the score increases with an increase in training sets.
+
 
 We can also observe the single Training data set models and see how they perform
 ```{r}
@@ -30,8 +42,6 @@ t7 = d[d$TrD7 == 1 & d$model=="S", ]
 t8 = d[d$TrD8 == 1 & d$model=="S", ]
 
 boxplot(t1$score,t2$score,t3$score,t4$score,t5$score,t6$score,t7$score,t8$score,names = c("1","2","3","4","5","6","7","8"), xlab ="TrD", ylab ="Scores", main="Overall Performance of single training set models")
-
-
 ```
 
 From this analysis we can see that for the simple models, those trained on either TrD 5,7,8 have the best average general performance for all testdatasets. Important to note is that the scores when using TrD 2 show a observably larger variance when compared to the other sets.
@@ -60,12 +70,11 @@ sub6= subset(d,TrD6==1)
 sub7= subset(d,TrD7==1)
 sub8= subset(d,TrD8==1)
 boxplot(sub1$score,sub2$score,sub3$score,sub4$score,sub5$score,sub6$score,sub7$score,sub8$score,names = c("1","2","3","4","5","6","7","8"), xlab ="TrD Selected", ylab ="Scores", main="Overall Performance of subsets of all data on a certain training set")
-
 ```
 From this we can see that the addition of a single training set has no effect on the overall average performance when considering all Test data sets and models.
 
-We visualize the subsets of all combinations of TrD1 and TrD2 and plot their scores against the test scores. Over all for most training sets the scores are similar. Although for TrD2 there does seem to be a slightly higher score when performed on TeD1
-The general performance of a subset seems to average out to the same. For the other Training sets similar results were observed and thus we do not visualize these.
+We visualize the subsets of all combinations of TrD1 and TrD2 and plot their scores against the test scores. Overall, for most training sets the scores are similar. Although for TrD2 there does seem to be a higher score when performed on TeD1, leading to believe that TrD2 performs particularly well on TeD1.
+For the other Training sets very similar results were observed as for TrD1 thus we choose not to visualize these.
 
 ```{r}
 plot(sub1$TeD, sub1$score, xlab ="TeD", ylab ="Scores", main= "Performance of subset of all data with TrD1 vs TestData set")
@@ -73,7 +82,8 @@ plot(sub2$TeD, sub2$score, xlab ="TeD", ylab ="Scores", main="Performance of sub
 ```
 ## Conclusion
 
-When looking at the combinations of training sets that give the best average performance it can be seen that most of the highest ranking combinations contain the dataset TrD2 and TrD8. This can mean that for good performance on all test sets these test sets are important. 
+When looking at the combinations of training sets that give the best average performance it can be seen that most of the highest ranking combinations contain the dataset TrD2 and TrD8. This can mean that for good performance on all test sets these test sets are important.
+We also perform an analysis of the effect of the amount of training sets, this shows that there is indeed a positive effect on the score with an increase in the amount of sets used.
 Doing an analysis of the performances of the single training set models we can observe that some single training set have a higher average performance in general. TrD 5,7 and 8 seem to provide the best performance. Notably 2, has a very low mean performance but also very high variance.
 From the analysis of the subset we can see that over all models and combinations of training data sets the performance averages out to the same.
 From the analysis it looks like the choice of a single model training set does have some effect on the general performance but when averaged out over all combinations there is no effect on the inclusion of a training set.
