@@ -1,10 +1,8 @@
 ---
-title: "R Notebook"
 output:
   pdf_document: default
   html_notebook: default
 ---
-
 # Research Question 2
 
 *Question: What is the effect of different strategies to simultaneously learn one model from multiple TrD’s?*
