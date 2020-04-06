@@ -23,11 +23,11 @@ Many people consider music to be a stress relieving agent that can be used to ac
 
 ## The theory underlying the research
 
-https://positivepsychology.com/music-therapy/  
+Source-https://positivepsychology.com/music-therapy/  
 
 Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ‘a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change’ (Geretsegger, Elefant, Mössler & Gold, 2014).
 
-Music therapy essentially works through the modulation of our attention, emotions, cognition, behaviour and communication via the use of musical experiences or pleasant sounds.(Koelsch, 2009). However, it must be noted that studying the psychological effects of music is a pretty recent research topic(Wigram, Pedersen & Bonde, 2002). We looked into a few cochrane reviews about the research involving the use of music to treat people with symptoms of depression and found that a few patients did show positive effects against signs of depression but that more research is needed to find conclusive evidence(Maratos et al., 2008). In addition, based on the work done by Klassen et al(2008) who analysed 19 randomized controlled trials, it was found that music therapy produced a significant reduction in anxiety levels and pain experienced by children who were undergoing medical and dental procedures.
+Music therapy essentially works through the modulation of our attention, emotions, cognition, behaviour and communication via the use of musical experiences or pleasant sounds.(Koelsch, 2009). However, it must be noted that studying the psychological effects of music is a pretty recent research topic(Wigram, Pedersen & Bonde, 2002). By looking into a few cochrane reviews about the research involving the use of music to treat people with symptoms of depression, it was found that a few patients did show positive effects against signs of depression but that more research is needed to find conclusive evidence(Maratos et al., 2008). In addition, based on the work done by Klassen et al(2008) who analysed 19 randomized controlled trials, it was found that music therapy produced a significant reduction in anxiety levels and pain experienced by children who were undergoing medical and dental procedures.
 
 Thus, our aim is to observe the effect of music on depression by seeking a correlation between the measurable properties of music and a subject’s change in depression score. And in order to extract quantitative properties of music, music information retrieval (MIR), which is a broad interdisciplinary field can be used. (Bello, J. P., Monti, G., & Sandler, M. (2000))
 
@@ -42,11 +42,10 @@ Thus, our aim is to observe the effect of music on depression by seeking a corre
 
 This conceptual model is in relation to both research questions. The main model depicting the relationship between independent variables and the dependent variable relates to the first research question. The moderating variable is modified to include age/sex to represent the second research question. 
 
-*Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music.
+*Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
 *Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
 *Mediating variable:  Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
 *Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
-
 
 
 ##Experimental Design 
@@ -68,9 +67,9 @@ The set up of the experiment is as follows-:
 
 2) We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test, at this stage no treatment has been provided to the experimental group.
  
-3) We then provide music therapy to the subjects in the the experimental group, whereas the subjects of the control group do not recieve any treatment.
+3) We then provide music therapy to the subjects in the the experimental group for a period of 4 weeks, whereas the subjects of the control group do not recieve any treatment.
 
-4) We finally conduct a post test for both sample groups using the same procedure as the pre test.
+4) After the treatment has concluded for the experimental group, we finally conduct a post test for both sample groups using the same procedure as the pre test.
 
 ## Measures
 
@@ -78,19 +77,18 @@ Dependent Variable:
 HAM-D-:We will measure depression in subjects using Hamiltonian Depression Rating Scale (HAM-D) which has 21 questions, from which 17 are marked. It requires an interview style questionnaire for the subject where they are enquired about various mental and physical symptoms. It goes from asking about abdomainal pain and insomnia to attempted suicide.
 
 Independent Variable:
-Quantitative Musical Properties-: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, 	mean and standard deviation of spectral centroids.
+Quantitative Musical Properties-: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, 	mean and standard deviation of spectral centroids. But mainly, for our purposes, the independent variable is simply a binary variable i.e whether the treatment of music therapy was provided or not. In addition to this, we can use the quantitative properties for creating a linear model.  
 
 Mediating variable:
-Attentiveness - The Music Attentiveness Screening Assessment (MASA) was created in order to gauge at the level of attentiveness when undergoing music therapy for children. This assessment may help or might be amenable to slight revisions to accomodate changes in participant's age or sex.
+Attentiveness - The Music Attentiveness Screening Assessment (MASA) was created in order to gauge at the level of attentiveness when undergoing music therapy for children. This assessment may help or might be amenable to slight revisions to accomodate changes in participant's age.
 
 Moderating Variable-
 Sound Quality- To objectively measure the quality of sound, we can look into the frequency range, Signal-to-Noise Ratio (SNR) and  Spurious-free Dynamic Range (SFDR)of our sound systems being used in the treatment.
 
 
-
 ## Participants
 
-For our experiment, we would like to recruit students studying in TU Delft. Thus our sampling frame is essentially all the students currently enrolled in the TU Delft database. Therefore our demographic for this experiment comprises of mix of nationalities, ethnicities, religions and genders with little variance in age with most students being adults(18+). We consider this to be an apt approximation of the young global population. Furthermore, we wish to do direct element sampling which essentially means any person from our sampling frame can be selected at random. We believe that this measure ensures a decrease in the influence of confounding variables and ensures validity of our research by removing a sampling bias. In addition, based on a 95% confidence level with a 5 percent confidence interval or margin of error and a total population size of 24703(as reported by TU Delft), we would need 378 participants. We acknowledge that this number is quite high but in order to achieve a truly significant result with high confidence levels and low margins of error, we are willing to do whatever it takes.   
+For our experiment, we would like to recruit students studying in TU Delft. Thus our sampling frame is essentially all the students currently enrolled in the TU Delft database. Therefore our demographic for this experiment comprises of mix a of nationalities, ethnicities, religions and genders with little variance in age with most students being adults(18+). We consider this to be an apt approximation of the young global population. Furthermore, we wish to do direct element sampling which essentially means any person from our sampling frame can be selected at random. We believe that this measure ensures a decrease in the influence of confounding variables and ensures validity of our research by removing a sampling bias. In addition, based on a 95% confidence level with a 5 percent confidence interval or margin of error and a total population size of 24703(as reported by TU Delft), we would need 378 participants.
 
 ## Suggested statistical analyses
 

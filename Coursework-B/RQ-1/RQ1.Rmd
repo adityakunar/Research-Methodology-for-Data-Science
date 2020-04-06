@@ -8,7 +8,7 @@ output: html_notebook
 
 ### Importing libraries and Reading in the dataset.
 
-```{r}
+```{r,echo=FALSE}
 library(pander)
 library(car)
 library('ggplot2')
@@ -18,35 +18,33 @@ data<- read.csv("../data/data.csv") #Read in the data in R.
 ```
 
 ## Understanding the dataset.
-```{r}
+```{r,echo=FALSE}
 table(data$model)# Count the data points for each model.
 ```
 Here we see that we only have 21 points for the first scenario which involves no transfer learning. Whereas with transfer learning, there are many more data points.
 
 Lets naively observe the means for the models.
-```{r}
+```{r,echo=FALSE}
 aggregate(score~model, data, mean) # We can look at the means for each model.
 ```
 This gives the mean scores for each model. We can see that the MN model has the highest mean score whereas the B2 model has the lowest mean score. We can also start to see that transfer learning at least doesn't negatively impact the mean scores of the models. However we still need to determine if anything can be said about it postively impacting the scores of the models in our dataset. 
-```{r}
+```{r,echo=FALSE}
 aggregate(score~TeD, data,mean) # We can also look at the means for each test dataset. 
 ```    
 Here we see the scores aggregated on the test datasets. We know that TeD1 to TeD4 are classification datasets and their mean scores are found to be higher than for the other tasks such as regression and recommendation. Infact we see the lowest performance for the recommendation task dataset i.e TeD5. We are beginning to realise that the *mean score of any model(transfer learning or not) might also be impacted by the test dataset as well*. 
 
 
 ### visualisations of model and dataset scores.
-```{r}
+```{r,echo=FALSE}
 plot(data$model, data$score, xlab = "Scores", ylab ="Models")
 ```
-```{r}
+```{r,echo=FALSE}
 plot(data$TeD, data$score, xlab ="Dataset", ylab ="Scores")
 ```
 Here we show a visual representation for our arguments made before in the previous section.  
 
 
-## Blind Analysis of models with and without Transfer Learning
-
-```{r}
+```{r,echo=FALSE}
 # storing all the no transfer learning scores.
 No_TL <- data$score[data$model=="B1"|data$model=="B2"|data$model=="B3"] 
 
@@ -58,62 +56,6 @@ data$TL <- with(data, ifelse(model=="B1"|model=="B2"|model=="B3","No_TL", "Yes_T
 data$TL <- factor(data$TL)
 ```
 
-For our analysis we  first pretend we only have model scores of when transfer learning was used and when it wasn't without any other additional information. And so, to check for a difference in mean scores, we can do an independent sample t test for which we need to make sure that our data is normally distributed. Here the null hypothesis is that there is no difference in mean scores between the two groups and the alternate hypthosis is that there is a difference in mean scores. 
-
-### Normality Analysis
-```{r}
-ggdensity(TL, 
-          main = "Density plot of Transfer Learning Used",
-          xlab = "Scores")
-```	
-```{r}
-ggdensity(No_TL, 
-          main = "Density plot of No Transfer Learning Used",
-          xlab = "Scores")
-```    
-Based on the density plots, we can say that the scores for both models with transfer learning and without don't seem to be normally distributed.
-
-```{r}
-shapiro.test(TL)
-```
-We see that based on the shapiro test(p. < 0.001) that the scores for when transfer learning was used are not normally distributed.
-
-```{r}
-shapiro.test(No_TL)
-```
-Likewise, we see that it's not normally distributed(p. < 0.001) for when transfer learning was not used as well.
-
-
-### Homogeneity of variance
-```{r}
-pander(leveneTest(data$score, data$TL, center=median)) 
-```    
-We also checked for homogeneity of variance. We see that with a p value close to 1, the spread around the mean scores for both groups of data is homogeneous. 
-
-### Parametric Test(Two independent sample T test.)
-```{r}
-t.test(score~TL, data)
-```
-We know that the data is not normally distributed according to the assumptions of the parametric t.test and so with a grain of salt we can say that indeed there is a significant difference(t=-2.26, df=20.307, p.< 0.05) in mean scores of our models when transfer learning was used or not. We can also see that on average transfer learning models have higher scores. 
-
-
-### Non Parametric Test (Wilcox signed rank test.)
-However, we thought it was best to also run a non parametric test as the data was in fact not normally distributed.
-```{r}
-wilcox.test(score~TL, data)
-```
-Here we see another significant result(W = 20624, p.< 0.05). Therefore we conclude that the our data for models with transfer learning and without are nonidentical populations. 
-
-### Non Parametric Test (Kruskal wallis test.)
-```{r}
-kruskal.test(score~TL, data)
-```
-Likewise for completeness we also performed another non parametric test and observed a significant result (Chi-Squared = 7.22,df=1 p.< 0.05). similarly we conclude that the our data for models with transfer learning and without are indeed nonidentical populations. 
-
-
-### Conclusion for the blind analysis
-
-So based on our simple blindfolded analysis, *we know that transfer learning does have a significant impact on the scores of our model*. 
 
 ## Exploring interaction effects of Test Datasets.
 
@@ -123,29 +65,32 @@ ggplot(data, aes(TL, score)) + geom_boxplot(notch = FALSE) + facet_wrap(~TeD)
 ```
 From the above analysis we can see that the test dataset creates a great degree of variation in the differences between models with transfer learning and without. 
 
-### Linear Modelling
-Lets study the affects of the interaction of the type of test data with the presence of transfer learning on the model scores.
+### Mutli Level Modelling
 
-```{r}
-m <- lm(score~TL*TeD, data)
-summary(m)
-confint(m)
-```    
+we wanted to perform a hierarchical analysis due to the fact that there was a clear dependency in observations obtained from the same test dataset. Therefore, we have used a multi-level model wherein the fixed effect is whether transfer learning was used or not and the random effect consists of random slopes for the difference in scenarios with respect to transfer learning being used and random intercepts for the different test datasets. 
 
-From the results above, first we see that *models with transfer learning have a positive deviation of .19 as compared to models without the use of transfer learning* and so models with transfer learning have .19 scores higher than models without the use of transfer learning. We can also see that this result is significant(t=4.836,p.<.001). For the datasets, we have 3 siginficant results. We see that TeD5 is an extremely difficult dataset to train as it really brings the model scores down the most. Likewise we see that the regression datasets TedD6 and TeD7 also bring the model scores down too with TeD7 having a stronger negative deviation. Finally we can interpret the significant interaction coefficients. We see that for TeD4 and TeD5, there is a negative deviation of -0.19 and -0.17 on the model scores even when transfer learning is used. 
+
+```{r,echo=FALSE}
+randomSlopeTL <- lme(score ~ TL, data = data, random = ~TL|TeD, method = "ML")
+summary(randomSlopeTL)
+```
+ Based on this model, we see that the presence of information regarding the use of transfer learning(t=3.26,df=2988,p.<0.01) has a significant impact on the scores of our models. We see that there is on average, a positive deviation of .12(95% CI, 0.04 to 0.18) across the different datasets for when transfer learning is used as compared to when it's not used.
+
+
+```{r, echo=FALSE}
+intervals(randomSlopeTL,0.95)
+```
+
+From the results shown above it can be seen that there is a significant variation in the scores caused by differences in the test datasets. This can be verified by looking at the confidence intervals of the random effects and more specifically the standard deviation between the fitted intercepts for the different test datasets which is 0.21 (95% CI, 0.12 to 0.36).  Futhermore, we can also see that there is very little standard deviation between the slopes fitted on the basis of whether transfer learning was used for different test datasets suggesting that all datasets mostly had the same beneficial effect from the use of transfer learning. Lastly, we can see that the confidence intervals are quite broad, this is an indication that there is a great deal of uncertainity in our estimates and we believe this is due to the imbalance of data points for when transfer learning was used vs when it wasn't as shown in the very beginning of the analysis. 
 
 
 ### The use of EMMEANS.
 
 For more clarity in our interpretation, we can also use the library emmeans.
-```{r}
-emmeans(m, pairwise~TL)
-```
-Based on this result shown above, we can say that there is 0.118 difference in the scores of models with transfer learning vs without transfer learning. And that this result is significant. 
 
-```{r}
+```{r,echo=FALSE}
 emmeans(m, pairwise~TL|TeD)
 ```    
-Finally we have a few more significant results. We see that there are significant differences(p.<0.001) for the following datasets: TeD1, TeD3, TeD6 and TeD7. We can see that in all cases, the model scores are higher for when transfer learning was used with the highest impact on the regression dataset TeD6(difference of .27) followed by the classification dataset TeD1(difference of .19). 
+Finally we have a few more significant results. We see that there are significant differences(p.<0.001) for the following datasets: TeD1, TeD3, TeD6 and TeD7. We can see that in all cases, the model scores are higher for when transfer learning was used with the highest impact on the regression dataset TeD6(difference of .28) followed by the classification dataset TeD1(difference of .20), the regression dataset TeD7 (0.17) and lastly, the classification dataset TeD3 (.12). 
 
 
