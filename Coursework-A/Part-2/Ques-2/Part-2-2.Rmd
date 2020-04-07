@@ -1,0 +1,149 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+## Question 2 - Website visits (between groups - Two factors)
+
+### 2.1 Conceptual model
+
+We are seeking the effect of Version (0,1), Portal (consumer, customer) and their interaction on the page visits by the user.
+
+### 2.2 Visual inspection
+#### 2.2.1 Reading Data
+
+We had to use file named 2 (by the %3 rule) but we used ```webvisita.csv``` as the files were named as **0, 1 and 'a'** for some reason  :/
+
+```{r}
+data = read.csv('webvisita.csv')
+data$version = as.factor(data$version)
+data$portal = as.factor(data$portal)
+summary(data)
+```
+
+#### 2.2.2 Examine the variation in Page Visits for different factors
+
+
+```{r}
+plot(  density(subset(data, version == 1)$pages), col='red', 
+       main="Page Visits density by Version",
+       xlab = "Page Visits")
+lines( density(subset(data, version == 0)$pages), col='blue')
+legend(8, 0.3, legend=c("version 1", "version 0"), col=c("red", "blue"), lty=1, cex=0.8)
+
+
+plot(  density(subset(data, portal == 0)$pages), col='red',
+       main="Page Visits density by Portal",
+       xlab = "Page Visits")
+lines( density(subset(data, portal == 1)$pages), col='blue')
+legend(8, 0.35, legend=c("Consumer", "Company"), col=c("red", "blue"), lty=1, cex=0.8)
+```
+
+```{r}
+library(ggplot2)
+ggplot(data, aes(x=version, y=pages))  + geom_boxplot(alpha = .7) + geom_jitter(width = .05, alpha = .2) 
+library(ggplot2)
+ggplot(data, aes(x=portal, y=pages))  + geom_boxplot(alpha = .7) + geom_jitter(width = .05, alpha = .2) 
+```
+
+
+
+Both version and portal show that the change in factor has observably different impact on page visits. We can again see that Consumer portal has a lower mean in the distribution. We can see tha version 1 has more normaly distributed and has a lower mean than version 0.
+
+### 2.3 Normality check
+
+```{r}
+library(pander)
+pander(tapply(data$pages, data$version, shapiro.test))
+pander(tapply(data$pages, data$portal, shapiro.test))
+```
+
+Page visits for both version and portal are **NOT** normally distributed therefore we cannot simply make conclusions based on observing the distributions.
+```{r}
+plot(density(data$pages), col='green', main="Page Visits density", xlab = "Page Visits")
+lines(density(rnorm(10000*length(data$pages), mean = mean(data$pages), sd = sd(data$pages))))
+legend(8, 0.25, legend=c("pages density", "normal distribution"), col=c("green", "black"), lty=1, cex=0.8)
+```
+
+```{r}
+shapiro.test(data$pages)
+```
+
+Judging by the graph and the Shapiro Wilk test we can see that Page Visits are also **NOT** normally distributed therefore we need to perform some extra analysis.
+
+
+### 2.4 Model analysis
+
+Lets build some linear models and see the significanse of the variables.
+```{r}
+# Model analysis
+library(car) #Package includes Levene's test 
+leveneTest(data$pages, interaction(data$version, data$portal))
+```
+```{r}
+library(ggplot2)
+ggplot(data, aes(portal , pages, fill = version)) + stat_summary(fun = mean, geom = "bar", position="dodge")
+```
+```{r}
+c(mean(data$pages), sd(data$pages))
+```
+
+
+The figure shows mean page visits for each of 4 conditions. The most difference is between (portal 1 version 0) and (portal 0 version 0)
+
+
+```{r}
+bar = ggplot2::aes(data$pages, data$version, fill=data$portal)
+
+
+model0 = lm(pages ~ 1, data=data)
+model1 = lm(pages ~ version, data=data)
+model2 = lm(pages ~ portal, data=data)
+model12 = lm(pages ~ version + portal, data=data)
+model123 = lm(pages ~ version + portal + version:portal, data=data)
+
+pander(anova(model0, model1), caption="Version as main effect on Page Visits")
+```
+
+
+```{r}
+pander(anova(model0, model2), caption="Portal as main effect on Page Visits")
+```
+
+
+```{r}
+pander(anova(model123), caption="Effect of Version + Portal + interaction on Page Visits")
+```
+
+We see that version does significantly affect page visits (p = 0.008324), the same goes for portal (p = 2.033e-14). We see that the Interracion effect is also significant (p=1.118e-08) for the Page Visits.
+
+
+
+### 2.5 Simple effect analysis
+As the interaction is significant, we carried out a Simple Effect Analysis.
+
+```{r}
+# Simple Effect analysis
+data$interaction = interaction(data$version, data$portal) # merge 2 factors
+levels(data$interaction) # see levels of interaction
+```
+
+
+```{r}
+# create contrasts to multiply
+contrastSimple = c(1,-1,0,0)
+contrastComplex = c(0,0,1,-1)
+SimpleEff = cbind(contrastSimple, contrastComplex)
+contrasts(data$interaction) = SimpleEff
+simpleEffModel = lm(pages ~ interaction, data=data)
+pander(summary.lm(simpleEffModel))
+```
+
+We can see here by the Simple effect analysis that the interaction effect is significant. The simple contrast is significant (p. = 0.01904) but the complex contrast has high significance (p. = 8.94e-09).
+
+
+
+### 2.6 Report section for a scientific publication
+We analyzed the data and found observable impact of version and portal on page visits by their distribution. We found that neither of version, portal or page visits are normally distributed. We conducted a Model analysis and saw that all three: Version \((F(1, 997) = 6.99, p. = 0.008324)\), Portal \((F(1, 997) = 60.28 p. = 2.033e-14)\) and Interaction \((F(1, 995) = 7.498, p. = 1.428e-13)\), independently have an impact on Page Visits. As the interaction effect was significant we conducted a Simple Effect analysis. It revealed a barely un-significant difference \((t = -2.349, p. = 0.01904)\) for simple contrast and a more significant difference \((t = 5.799, p. = 8.94e-09)\) for the complex contrast.
