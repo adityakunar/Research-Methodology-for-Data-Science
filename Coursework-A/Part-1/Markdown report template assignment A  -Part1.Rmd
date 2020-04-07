@@ -31,7 +31,7 @@ Music therapy is a well established field. This experiment will be heavily inspi
 
 As for studies concerning depression, the Hamilton Rating Scale for Depression for rating the depression of subjects [2] was used to test the effect of antidepressants in the first group of subjects going through the trials in the 1960s. It is heavily used in the psychology and psychiatry domains, an instance of this would be [3]  where they studied depression in elderly patients. We also observed that these studies are sensitive to the mood of the subject and so a Profile of Mood States (POMS) evaluation is also taken into consideration during our study [4]. 
 
-
+	
 
 ## Research questions 
 
@@ -47,11 +47,14 @@ As for studies concerning depression, the Hamilton Rating Scale for Depression f
 
 Above is the main model depicting the relationship between independent variables and the dependent variable for the research questions. 
 
-* Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
+* Independent variables: However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
 
 * Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
 
-* Mediating variable:  Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
+* Mediating variable:  Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. 
+
+
+Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
 
 * Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
 
