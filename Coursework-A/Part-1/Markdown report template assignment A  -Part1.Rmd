@@ -31,15 +31,16 @@ Music therapy is a well established field. This experiment will be heavily inspi
 
 As for studies concerning depression, the Hamilton Rating Scale for Depression for rating the depression of subjects [2] was used to test the effect of antidepressants in the first group of subjects going through the trials in the 1960s. It is heavily used in the psychology and psychiatry domains, an instance of this would be [3]  where they studied depression in elderly patients. We also observed that these studies are sensitive to the mood of the subject and so a Profile of Mood States (POMS) evaluation is also taken into consideration during our study [4]. 
 
-	
 
 ## Research questions 
 
 1. Is there a difference in the depression level of a subject who has undergone the treatment of listening to music as compared to a subject who hasn't received any treatment? (Main research question)
 
-2. Does the present mood during the therapy or just control subjects affect the treatment? 
+2. Is there an affect on the mood of an individual based on the treatment and does the mood then have any correspondance to the depression score?
 
-3. If the treatment works then what musical properties influence this lowering in depression?
+3. What is the influence of musical properties in the effectiveness of the treatment ?
+
+4. What is the role of age/sex in the effectiveness of the treatment ?
 
 ## The Conceptual Model
 
@@ -47,16 +48,16 @@ As for studies concerning depression, the Hamilton Rating Scale for Depression f
 
 Above is the main model depicting the relationship between independent variables and the dependent variable for the research questions. 
 
-* Independent variables: However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
+* Independent variables: For our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
 
 * Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
 
-* Mediating variable:  Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. 
+* Mediating variable:  Profile of mood state assessment of the subject is considered to be a mediating variable. The music changes the mood/attentiveness of a person which then impacts the dependent variable. 
 
+* Moderating variable: 
 
-Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
-
-* Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
+1)Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music which can perhaps increase or decrease the effectiveness of the treatment.
+2) Age or sex of an individual.
 
 ## Experimental Design 
 
@@ -75,7 +76,7 @@ The set up of the experiment is as follows-:
 
 1.  We gather the participants who have made themselves available for our experiment and divide them into two equal groups, the Experimental and Control groups respectively.
 
-2. We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test, at this stage no treatment has been provided to the experimental group.
+2. We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test and subsequently there after we conduct the profile of mood states assessment as well, however at this stage no treatment has been provided to the experimental group.
 
 3. We then provide music therapy to the subjects in the the experimental group for a period of 4 weeks, whereas the subjects of the control group do not receive any treatment.
 
@@ -90,18 +91,16 @@ The set up of the experiment is as follows-:
 **Independent Variable:**
 
 * Music Therapy:  A binary variable i.e. whether the treatment of music therapy was provided or not.
-* POMS: Profile of Mood States to record the subject's mood just before the treatment.
 
 **Moderating variable:**
 
 * Age: age of the subject.
 * Sex: Male, Female, Other
+* Quantitative Musical Properties: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, mean and standard deviation of spectral centroids.
 
 **Mediating variable:**
 
-* Quantitative Musical Properties: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, mean and standard deviation of spectral centroids.
-
-
+* POMS: Profile of Mood States to record the subject's mood after the treatment has been completed.
 
 
 ## Participants
@@ -115,9 +114,12 @@ For our experiment, we would like to recruit students studying in TU Delft. Thus
 2. Test of homogeneity of variance. (The Levene test.) for both groups.
 
 3. Two independent samples t-test for comparing the means of HAM-D scores for people with treatment vs people without treatment. The first two tests are required to make sure that the assumptions of the t-test hold.
-4. if the significance of music therapy holds then a t-test for seeing which musical properties affect the depression score drop along the 4 weeks the most. Therefore, music properties vs. drop in HAMD Score 
+
+4. If the significance of music therapy holds then we can fit a linear regression model for seeing which musical properties affect the depression score drop after the 4 weeks the most. (However for doing this, we would need to redo the entire experiment with different music everytime.)
 
 4. Analysis of variance(ANOVA) for different age groups and sexes on the difference between the pre-test and post-test scores of the experimental group to see if sex/age has an affect on the effectiveness of the treatment. 
+
+5. We can also calculate the pearson correlation coefficient between the profile in mood state scores and the depression scores to see if mood is indeed a mediating variable.
 
 ## References for this section
 
