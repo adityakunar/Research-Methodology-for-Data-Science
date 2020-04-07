@@ -1,5 +1,4 @@
 ---
-title: "R Notebook"
 output:
   pdf_document: default
   html_notebook: default
@@ -8,7 +7,7 @@ output:
 ## Question 2 - Website visits (between groups - Two factors)
 
 ### 2.1 Conceptual model
-
+![img](C:\Users\bshar\Desktop\Studies\Q3\Sem Data Sci\semimar-data-sci\Coursework-A\Part-2\Ques-2\Q2 conceptual model.jpg)
 We are seeking the effect of Version (0,1), Portal (consumer, customer) and their interaction on the page visits by the user.
 
 ### 2.2 Visual inspection
