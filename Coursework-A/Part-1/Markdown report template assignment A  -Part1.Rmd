@@ -19,42 +19,48 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## The motivation for the planned research 
 
-Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. Infact, music is a key element of one’s everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
+Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. In fact, music is a key element of one’s everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
 
 ## The theory underlying the research
 
-Source-https://positivepsychology.com/music-therapy/  
+Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ‘a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change’ [5].
 
-Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ‘a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change’ (Geretsegger, Elefant, Mössler & Gold, 2014).
+Music therapy essentially works through the modulation of our attention, emotions, cognition, behavior and communication via the use of musical experiences or pleasant sounds[6].
 
-Music therapy essentially works through the modulation of our attention, emotions, cognition, behaviour and communication via the use of musical experiences or pleasant sounds.(Koelsch, 2009). However, it must be noted that studying the psychological effects of music is a pretty recent research topic(Wigram, Pedersen & Bonde, 2002). By looking into a few cochrane reviews about the research involving the use of music to treat people with symptoms of depression, it was found that a few patients did show positive effects against signs of depression but that more research is needed to find conclusive evidence(Maratos et al., 2008). In addition, based on the work done by Klassen et al(2008) who analysed 19 randomized controlled trials, it was found that music therapy produced a significant reduction in anxiety levels and pain experienced by children who were undergoing medical and dental procedures.
+Music therapy is a well established field. This experiment will be heavily inspired by  [1], where they tried music therapy as an intervention mechanism. We propose to additionally investigate the actual effect of various quantitative properties of music on the subject's depression score. 
 
-Thus, our aim is to observe the effect of music on depression by seeking a correlation between the measurable properties of music and a subject’s change in depression score. And in order to extract quantitative properties of music, music information retrieval (MIR), which is a broad interdisciplinary field can be used. (Bello, J. P., Monti, G., & Sandler, M. (2000))
-
-
-##Research questions 
-
-1)Is there a difference in the depression level of a subject who has undergone the treatment of listening to music as compared to a subject who hasn't recieved any treatment? (Main research question)
-
-2) Is there a difference in the effectiveness of the treatment between different genders and age groups? (Secondary research question.)
-
-##The Conceptual Model
-
-This conceptual model is in relation to both research questions. The main model depicting the relationship between independent variables and the dependent variable relates to the first research question. The moderating variable is modified to include age/sex to represent the second research question. 
-
-*Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
-*Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
-*Mediating variable:  Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
-*Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
+We will use HAM-D or the Hamilton Rating Scale for Depression for rating the depression for the subjects [2]. It was used to test the effect of antidepressants in the first group of subjects going through the trials in the 1960s. It is heavily used in the psychology and psychiatry domains, an instance of this would be [3]  where they studied depression in elderly patients. We also know that It is sensitive to the mood of the subject so we will also do a Profile of Mood States (POMS) evaluation before every session of the treatment [4]. 
 
 
-##Experimental Design 
 
-Design of Experiment-
+## Research questions 
+
+1. Is there a difference in the depression level of a subject who has undergone the treatment of listening to music as compared to a subject who hasn't received any treatment? (Main research question)
+
+2. Does the present mood during the therapy or just control subjects affect the treatment? 
+3. If the treatment works then what musical properties influence this lowering in depression?
+
+## The Conceptual Model
+
+![](C:\Users\bshar\Desktop\Studies\Q3\Sem Data Sci\semimar-data-sci\Coursework-A\Part-1\Part 1 conceptual model.jpg)
+
+Above is the main model depicting the relationship between independent variables and the dependent variable for the research questions. 
+
+* Independent variables: Quantitative Musical Properties (tempo, energy, spectral centroids, onset count, etc.). These are some of the inherent properties of the music. However, for our purposes, we are only considering the independent variable to be whether music therapy was provided or not as a binary categorical independent variable. 
+
+* Dependent variable:   Measured depression (HAM-D score) of the subject. This indicates the level of depression in a subject.
+
+* Mediating variable:  Mood/Willingness/Attentiveness of the subject which is a transient property. The music changes the mood/attentiveness of a person which then impacts the dependent variable.
+
+* Moderating variable: Listening Experience (listening in isolation or not, quality of sound reproduction, etc.) With better listening experience, the user can take better advantage of the treatment. 
+
+## Experimental Design 
 
 Two Group Design Pre-Test Post-Test Randomized Control Experiment/Trial.
 
 The aim of the experiment is to test the effect of music on the depression level of the participants. Using two groups, one experimental group and one control group.
+
+![](C:\Users\bshar\Desktop\Studies\Q3\Sem Data Sci\semimar-data-sci\Coursework-A\Part-1\Pre-post.png)
 
 This is a true experiment because we are controlling the independent variable by only providing treatment of music therapy to one group( experimental group) and not the other(control group) so we can see if there is a statistically significant difference. Furthermore, we plan to conduct pre-tests as well to make sure to account for abnormalities in the samples. 
 
@@ -63,27 +69,35 @@ This is a true experiment because we are controlling the independent variable by
 
 The set up of the experiment is as follows-:
 
-1) We gather the participants who have made themselves available for our experiment and divide them into two equal groups, the Experimental and Control groups respectively.
+1.  We gather the participants who have made themselves available for our experiment and divide them into two equal groups, the Experimental and Control groups respectively.
 
-2) We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test, at this stage no treatment has been provided to the experimental group.
- 
-3) We then provide music therapy to the subjects in the the experimental group for a period of 4 weeks, whereas the subjects of the control group do not recieve any treatment.
+2. We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test, at this stage no treatment has been provided to the experimental group.
 
-4) After the treatment has concluded for the experimental group, we finally conduct a post test for both sample groups using the same procedure as the pre test.
+3. We then provide music therapy to the subjects in the the experimental group for a period of 4 weeks, whereas the subjects of the control group do not receive any treatment.
+
+4. After the treatment has concluded for the experimental group, we finally conduct a post test for both sample groups using the same procedure as the pre test.
 
 ## Measures
 
-Dependent Variable:
-HAM-D-:We will measure depression in subjects using Hamiltonian Depression Rating Scale (HAM-D) which has 21 questions, from which 17 are marked. It requires an interview style questionnaire for the subject where they are enquired about various mental and physical symptoms. It goes from asking about abdomainal pain and insomnia to attempted suicide.
+**Dependent Variable:**
 
-Independent Variable:
-Quantitative Musical Properties-: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, 	mean and standard deviation of spectral centroids. But mainly, for our purposes, the independent variable is simply a binary variable i.e whether the treatment of music therapy was provided or not. In addition to this, we can use the quantitative properties for creating a linear model.  
+* HAM-D: We will measure depression in subjects using Hamiltonian Depression Rating Scale (HAM-D) which has 21 questions, from which 17 are marked. It requires an interview style questionnaire for the subject where they are enquired about various mental and physical symptoms.
 
-Mediating variable:
-Attentiveness - The Music Attentiveness Screening Assessment (MASA) was created in order to gauge at the level of attentiveness when undergoing music therapy for children. This assessment may help or might be amenable to slight revisions to accomodate changes in participant's age.
+**Independent Variable:**
 
-Moderating Variable-
-Sound Quality- To objectively measure the quality of sound, we can look into the frequency range, Signal-to-Noise Ratio (SNR) and  Spurious-free Dynamic Range (SFDR)of our sound systems being used in the treatment.
+* Music Therapy:  A binary variable i.e. whether the treatment of music therapy was provided or not.
+* POMS: Profile of Mood States to record the subject's mood just before the treatment.
+
+**Moderating variable:**
+
+* Age: age of the subject.
+* Sex: Male, Female, Other
+
+**Mediating variable:**
+
+* Quantitative Musical Properties: Properties of music derived from signal processing techniques such as tempo, average onset per sec, RMS energy, mean and standard deviation of spectral centroids.
+
+
 
 
 ## Participants
@@ -92,10 +106,28 @@ For our experiment, we would like to recruit students studying in TU Delft. Thus
 
 ## Suggested statistical analyses
 
-1)Test of Normality using the Shapiro test for both groups.
+1. Test of Normality using the Shapiro test for both groups.
 
-2)Test of homogeneity of variance. (The Levene test.) for both groups.
+2. Test of homogeneity of variance. (The Levene test.) for both groups.
 
-3)Two independent samples t-test for comparing the means of HAM-D scores for people with treatment of music vs people without treatment of music. The first two tests are required to make sure that the assumptions of the t-test hold.
+3. Two independent samples t-test for comparing the means of HAM-D scores for people with treatment vs people without treatment. The first two tests are required to make sure that the assumptions of the t-test hold.
+4. if the significance of music therapy holds then a t-test for seeing which musical properties affect the depression score drop along the 4 weeks the most. Therefore, music properties vs. drop in HAMD Score 
 
-4)Finally, as a last test to answer our second research question, we can perform an analysis of variance(ANOVA) for different age groups and sexes on the difference between the pre-test and post-test scores of the experimental group to see if sex/age has an affect on the effectiveness of the treatment. 
+4. Analysis of variance(ANOVA) for different age groups and sexes on the difference between the pre-test and post-test scores of the experimental group to see if sex/age has an affect on the effectiveness of the treatment. 
+
+## References for this section
+
+[1]	Sonja Aalbers, Annemieke Vink, Ruth E. Freeman, Kim Pattiselanno, Marinus Spreen, Susan van Hooren, "Development of an Improvisational Music Therapy Intervention for young
+Adults with depressive Symptoms: An Intervention Mapping Study," The Arts in Psychotherapy, DOI https://doi.org/10.1016/j.aip.2019.101584, 2019
+
+[2]	Rachel Sharp, "The Hamilton Rating Scale for Depression," *Occupational Medicine*, Volume 65, Issue 4, June 2015, Page 340, https://doi.org/10.1093/occmed/kqv043
+
+[3]	Belloit H. Mulsant, Robert Sweet, A. Hind Rifai, Rona E. Pasternak, Ann McEachran, George S. Zubenko, "The Use of the Hamilton Rating Scale for Depression in Elderly Patients With Cognitive Impairment and Physical Illness," The American Journal of Geriatric Psychiatry, Volume 2, Issue 3, 220 - 229, April 1994.
+
+[4]	Little K, Penman E, "Measuring Subacute Mood Changes Using the Profile of Mood States and Visual Analogue Scales," Psychopathology 1989;22:42-49. doi: 10.1159/000284578, 1989.
+
+[5]	Geretsegger, M., Elefant, C., Mössler, K. A., & Gold, C. (2014).  Music therapy for people with autism spectrum disorder. Cochrane Review  of Systematic Reviews, 6, Art. No: CD004381. doi:  10.1002/14651858.CD004381.pub3
+
+[6]	Koelsch, S. (2009). A Neuroscientific perspective on music therapy. *Annals of the New York Academy of Science, 1169*, 374 – 384. doi: 10.1111/j.1749-6632.2009.04592.x
+
+[7]	Heather Craig, "What is Music Therapy and How Does It Work?" available at: https://positivepsychology.com/music-therapy/
