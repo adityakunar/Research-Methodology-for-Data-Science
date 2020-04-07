@@ -27,9 +27,9 @@ Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the u
 
 Music therapy essentially works through the modulation of our attention, emotions, cognition, behavior and communication via the use of musical experiences or pleasant sounds[6].
 
-Music therapy is a well established field. This experiment will be heavily inspired by  [1], where they tried music therapy as an intervention mechanism. We propose to additionally investigate the actual effect of various quantitative properties of music on the subject's depression score. 
+Music therapy is a well established field. This experiment will be heavily inspired by [1], where they tried music therapy as an intervention mechanism. We also propose to additionally investigate the actual effect of various quantitative properties of music on the subject's depression score where the quantitative properties will be extracted using music information retrieval(MIR) techniques. 
 
-We will use HAM-D or the Hamilton Rating Scale for Depression for rating the depression for the subjects [2]. It was used to test the effect of antidepressants in the first group of subjects going through the trials in the 1960s. It is heavily used in the psychology and psychiatry domains, an instance of this would be [3]  where they studied depression in elderly patients. We also know that It is sensitive to the mood of the subject so we will also do a Profile of Mood States (POMS) evaluation before every session of the treatment [4]. 
+As for studies concerning depression, the Hamilton Rating Scale for Depression for rating the depression of subjects [2] was used to test the effect of antidepressants in the first group of subjects going through the trials in the 1960s. It is heavily used in the psychology and psychiatry domains, an instance of this would be [3]  where they studied depression in elderly patients. We also observed that these studies are sensitive to the mood of the subject and so a Profile of Mood States (POMS) evaluation is also taken into consideration during our study [4]. 
 
 
 
@@ -38,6 +38,7 @@ We will use HAM-D or the Hamilton Rating Scale for Depression for rating the dep
 1. Is there a difference in the depression level of a subject who has undergone the treatment of listening to music as compared to a subject who hasn't received any treatment? (Main research question)
 
 2. Does the present mood during the therapy or just control subjects affect the treatment? 
+
 3. If the treatment works then what musical properties influence this lowering in depression?
 
 ## The Conceptual Model
