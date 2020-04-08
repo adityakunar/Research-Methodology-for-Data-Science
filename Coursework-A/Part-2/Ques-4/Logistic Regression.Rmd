@@ -1,6 +1,5 @@
 ---
-title: "Question 4 - Logistic regression analysis
-"
+title: Question 4 - Logistic regression analysis
 output: html_notebook
 ---
 
@@ -206,7 +205,7 @@ mydata$dfbeta<-dfbeta(model4)
 troublingdata<-subset(mydata, (leverage > 3*.0083) | (abs(stud.res) > 2), 
        select = c("leverage", "stud.res", "dfbeta"))
 head(troublingdata)
-plot(model4)
+plot(model4, which=5)
 ```
 
 We have also looked into the impact of individual cases as well by looking at the studentized residuals, the leverage values and the dfbeta values. We have calculated the leverage as 1+(# of predictors)/# of observations. We check for values greater than 3 times the average leverage and for values with the absolute studentized residuals greater than 2. In addition we also looked for points outside the dashed red line in the plot of the residuals vs leverage to see if there were points with a large cook's distance as well. We have removed some of these points and noticed an improvement in the pseudo R squared values as well. Infact for this analysis we have used the cleaned dataset after removing values with high leverage based on the previous one as can be seen in the name of the file used too. 
