@@ -2,7 +2,7 @@
 title: "Report Template coursework assignment A - 2020"
 subtitle: "CS4125 Seminar Research Methodology for Data Science"
 author: "Sharwin Bobde (5011639), Aditya Kunar (5074274), Pavel Hoogland (4450892)"
-date: "29/02/2020"
+date: "08/04/2020"
 output:
    pdf_document:
       fig_caption: true
@@ -13,17 +13,17 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-\tableofcontents
+
 
 # Part 1 - Design and set-up of true experiment 
 
 ## The motivation for the planned research 
 
-Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. In fact, music is a key element of one’s everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
+Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. In fact, music is a key element of one?s everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
 
 ## The theory underlying the research
 
-Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ‘a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change’ [5].
+Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ?a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change? [5].
 
 Music therapy essentially works through the modulation of our attention, emotions, cognition, behavior and communication via the use of musical experiences or pleasant sounds[6].
 
@@ -126,14 +126,14 @@ For our experiment, we would like to recruit students studying in TU Delft. Thus
 [1]	Sonja Aalbers, Annemieke Vink, Ruth E. Freeman, Kim Pattiselanno, Marinus Spreen, Susan van Hooren, "Development of an Improvisational Music Therapy Intervention for young
 Adults with depressive Symptoms: An Intervention Mapping Study," The Arts in Psychotherapy, DOI https://doi.org/10.1016/j.aip.2019.101584, 2019
 
-[2]	Rachel Sharp, "The Hamilton Rating Scale for Depression," *Occupational Medicine*, Volume 65, Issue 4, June 2015, Page 340, https://doi.org/10.1093/occmed/kqv043
+[2]	Rachel Sharp, "The Hamilton Rating Scale for Depression," Occupational Medicine, Volume 65, Issue 4, June 2015, Page 340, https://doi.org/10.1093/occmed/kqv043
 
 [3]	Belloit H. Mulsant, Robert Sweet, A. Hind Rifai, Rona E. Pasternak, Ann McEachran, George S. Zubenko, "The Use of the Hamilton Rating Scale for Depression in Elderly Patients With Cognitive Impairment and Physical Illness," The American Journal of Geriatric Psychiatry, Volume 2, Issue 3, 220 - 229, April 1994.
 
 [4]	Little K, Penman E, "Measuring Subacute Mood Changes Using the Profile of Mood States and Visual Analogue Scales," Psychopathology 1989;22:42-49. doi: 10.1159/000284578, 1989.
 
-[5]	Geretsegger, M., Elefant, C., Mössler, K. A., & Gold, C. (2014).  Music therapy for people with autism spectrum disorder. Cochrane Review  of Systematic Reviews, 6, Art. No: CD004381. doi:  10.1002/14651858.CD004381.pub3
+[5]	Geretsegger, M., Elefant, C., M?ssler, K. A., & Gold, C. (2014).  Music therapy for people with autism spectrum disorder. Cochrane Review  of Systematic Reviews, 6, Art. No: CD004381. doi:  10.1002/14651858.CD004381.pub3
 
-[6]	Koelsch, S. (2009). A Neuroscientific perspective on music therapy. *Annals of the New York Academy of Science, 1169*, 374 – 384. doi: 10.1111/j.1749-6632.2009.04592.x
+[6]	Koelsch, S. (2009). A Neuroscientific perspective on music therapy.*Annals of the New York Academy of Science, 1169, 374 ? 384. doi: 10.1111/j.1749-6632.2009.04592.x
 
 [7]	Heather Craig, "What is Music Therapy and How Does It Work?" available at: https://positivepsychology.com/music-therapy/

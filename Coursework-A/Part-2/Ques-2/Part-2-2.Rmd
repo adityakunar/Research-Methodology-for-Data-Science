@@ -7,7 +7,8 @@ output:
 ## Question 2 - Website visits (between groups - Two factors)
 
 ### 2.1 Conceptual model
-![img](C:\Users\bshar\Desktop\Studies\Q3\Sem Data Sci\semimar-data-sci\Coursework-A\Part-2\Ques-2\Q2 conceptual model.jpg)
+![](C:\Users\bshar\Desktop\Studies\Q3\Sem Data Sci\semimar-data-sci\Coursework-A\Part-2\Ques-2\Q2 conceptual model.jpg)
+
 We are seeking the effect of Version (0,1), Portal (consumer, customer) and their interaction on the page visits by the user.
 
 ### 2.2 Visual inspection
@@ -75,22 +76,31 @@ Judging by the graph and the Shapiro Wilk test we can see that Page Visits are a
 
 ### 2.4 Model analysis
 
-Lets build some linear models and see the significanse of the variables.
+Lets build some linear models and see the significanse of the variables. We should first see the Homogeniety of variance across all the conditions first.
 ```{r}
 # Model analysis
 library(car) #Package includes Levene's test 
 leveneTest(data$pages, interaction(data$version, data$portal))
 ```
+We see that the Levene test shows that there is no significant difference between the 4 conditions.
+
 ```{r}
 library(ggplot2)
 ggplot(data, aes(portal , pages, fill = version)) + stat_summary(fun = mean, geom = "bar", position="dodge")
 ```
 ```{r}
-c(mean(data$pages), sd(data$pages))
+s = subset(data, portal == 0 & version == 0)$pages
+c(mean(s), sd(s))
+s = subset(data, portal == 0 & version == 1)$pages
+c(mean(s), sd(s))
+s = subset(data, portal == 1 & version == 0)$pages
+c(mean(s), sd(s))
+s = subset(data, portal == 1 & version == 1)$pages
+c(mean(s), sd(s))
 ```
 
 
-The figure shows mean page visits for each of 4 conditions. The most difference is between (portal 1 version 0) and (portal 0 version 0)
+The figure shows mean page visits for each of 4 conditions. The most difference is between (portal 1 version 0) and (portal 0 version 0). The mean and standard deviations have been printed after that.
 
 
 ```{r}
@@ -140,9 +150,22 @@ simpleEffModel = lm(pages ~ interaction, data=data)
 pander(summary.lm(simpleEffModel))
 ```
 
-We can see here by the Simple effect analysis that the interaction effect is significant. The simple contrast is significant (p. = 0.01904) but the complex contrast has high significance (p. = 8.94e-09).
+We can see here by the Simple effect analysis that the interaction effect is significant. The simple contrast is significant (p. = 0.01904) and so is the complex contrast (p. = 8.94e-09) for the page visits.
 
 
 
 ### 2.6 Report section for a scientific publication
-We analyzed the data and found observable impact of version and portal on page visits by their distribution. We found that neither of version, portal or page visits are normally distributed. We conducted a Model analysis and saw that all three: Version \((F(1, 997) = 6.99, p. = 0.008324)\), Portal \((F(1, 997) = 60.28 p. = 2.033e-14)\) and Interaction \((F(1, 995) = 7.498, p. = 1.428e-13)\), independently have an impact on Page Visits. As the interaction effect was significant we conducted a Simple Effect analysis. It revealed a barely un-significant difference \((t = -2.349, p. = 0.01904)\) for simple contrast and a more significant difference \((t = 5.799, p. = 8.94e-09)\) for the complex contrast.
+
+| portal | version | \(\mu\)  |\(\sigma\)|
+|--------|---------|----------|----------|
+| 0      | 0       | 2.135458 | 1.517095 |
+| 0      | 1       | 2.47561  | 1.54306  |
+| 1      | 0       | 3.492701 | 1.767104 |
+| 1      | 1       | 2.653509 | 1.600698 |
+
+We analyzed the data and found observable impact of version and portal on page visits by their distribution. We found that neither of version, portal or page visits are normally distributed. We observed the means of the 4 means of the groups formed by the different version and portals (4 levels): they are given in the above table.
+
+We conducted a Model analysis and saw that all three: Version \((F(1, 997) = 6.99, p. = 0.008324)\), Portal \((F(1, 997) = 60.28 p. = 2.033e-14)\) and Interaction \((F(1, 995) = 7.498, p. = 1.428e-13)\), independently have an impact on Page Visits.
+
+As the interaction effect was significant we conducted a Simple Effect analysis. It revealed a significant difference \((t = -2.349, p. = 0.01904)\) for simple contrast and a significant difference \((t = 5.799, p. = 8.94e-09)\) for the complex contrast.
+
