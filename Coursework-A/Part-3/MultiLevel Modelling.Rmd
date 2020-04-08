@@ -76,7 +76,7 @@ Here we have compared our random intercept(random = ~1|Subject) model with no fi
 ```{r}
 summary(randomInterceptSession)
 ```
- Based on the results shown above, we can see that there is a standard deviation of 46.4 between the intercepts that have been fitted on the scores for different subjects and standard deviation of 34.9 for the residuals. We also see that there is a negative correlation of -0.21 between the session and the scores. Indeed based on our visual plot of the relationship between session and score we did see a slightly downward slope as well. Lastly, the value of the fixed intercept in this case is 108.66.     
+ Based on the results shown above, we can see that there is a standard deviation of 46.4 between the intercepts that have been fitted on the scores for different subjects and standard deviation of 34.9 for the residuals. We also see that there is a negative coefficient for the session variable suggesting that scores go down as session number increases. Indeed based on our visual plot of the relationship between session and score we did see a slightly downward slope as well. Lastly, the value of the fixed intercept in this case is 108.66.     
       
       
 ```{r}

@@ -15,7 +15,11 @@ Here we see how the data has been stored and collected using the code provided t
 
 ### Conceptual model
 
-The conceptual model contains the celebrity type as an independent variable and the sentiment score as the dependent variable. We wish to study if there is a significant affect on the sentiment scores based on the different celebrities.
+The conceptual model contains the celebrity type as an independent variable and the sentiment score as the dependent variable. We wish to study if there is a significant effect on the sentiment scores based on the different celebrities.
+
+
+![](D:/Downloads/Revised Conceptual Model.png)
+
 
 ### Homogeneity of variance analysis
 
@@ -24,7 +28,7 @@ The homogeneity of variance is a common assumption underlying many statistical t
 ```{r}
 pander(leveneTest(semFrame$score, semFrame$Candidate, center=mean)) 
 ```
-The results of our levene test is significant (Degrees of freedom=4,F value=8.278, P value <.001 ), therefore the null hypothesis or assumption of homogeneity of variance is rejected and so doesn't hold for this data.
+The results of our levene test is significant (Degrees of freedom=4,F value=61.85, P value <.001 ), therefore the null hypothesis or assumption of homogeneity of variance is rejected and so doesn't hold for this data.
 
 ### Visual Inspection 
 
@@ -40,29 +44,29 @@ Rihanna_Score <- sem$analysis_Rihanna.score
 h<-hist(Trump_Score, col="grey",breaks=seq(min(Trump_Score)-0.5, max(Trump_Score)+0.5, by=1))
 ```
 
-Trumps sentiment scores are largely neutral with a peak at 0 and a skew towards the postive sentiment scores. The data doesn't seem to look normally distributed.
+Trumps sentiment scores are suprisingly skewed towards positive with a peak at +1, suggesting he might be doing well with the Corona situation in the US. The data doesn't seem to look too normally distributed and we can see long tails on both sides.
 
 ```{r}
 h<-hist(Modi_Score, col="grey",breaks=seq(min(Modi_Score)-0.5, max(Modi_Score)+0.5, by=1) )
 ```
-PM of India, Mr Modi seems to be showing mostly postive sentiment scores. This might mean his actions against the corona virus are being appreciated by the indian community. Again the data is very from from normal. 
+PM of India, Mr Modi seems to be showing somewhat normally distributed sentiment scores with a sharp peak at 0, which could mean his actions against the corona virus could be showing an overall neutral response by the indian community.  
 
 ```{r}
 h<-hist(Beyonce_Score,col="grey", breaks=seq(min(Beyonce_Score)-0.5, max(Beyonce_Score)+0.5, by=1))
 ```
-Beyonce's sentiment scores seem to look like the most normally distributed out of all the celebrity's scores. 
+Beyonce's sentiment scores can be seen to be mostly positive as one would expect.The data doesnt look normally distributed at all.  
 
 
 ```{r}
 h<-hist(Bill_Gates_Score,col="grey", breaks=seq(min(Rihanna_Score)-0.5, max(Bill_Gates_Score)+0.5, by=1))
 ```
-Bill Gates sentiment scores are mostly positive as one would expect.
+Bill Gates sentiment scores are mostly neutral as one would expect with a sharp peak at 0. The data looks somewhat normally distributed. 
 
 
 ```{r}
 h<-hist(Rihanna_Score,col="grey", breaks=seq(min(Rihanna_Score)-0.5, max(Rihanna_Score)+0.5, by=1))
 ```
-As for Rihanna's sentiment scores, she has mostly positive sentiment score as well. The data doesn't look normally distrubuted at all however.
+As for Rihanna's sentiment scores, she has mostly positive sentiment score as well with a sharp peak at 0. The data doesn't look normally distrubuted at all however.
 
 ### Normality Analysis
 
@@ -76,7 +80,7 @@ shapiro.test(Rihanna_Score)
 shapiro.test(Beyonce_Score)
 ```
 
-From the shapiro test, we can clearly see that the null hypothesis is rejected(P value<0.001) and can conclude that none of the celebrity scores are normally distributed.
+From the shapiro test, we can clearly see that the null hypothesis is rejected(P value<0.001) and can conclude that none of the celebrity sentiment cores are normally distributed.
 
 ### Mean sentiments
 
@@ -85,18 +89,16 @@ boxplot(score~Candidate,data=semFrame, main="Difference in Celebrity Sentiment S
         xlab="Candidate", ylab="Sentiment Score") 
 ```
 
-From this boxplot, we can clearly see that there are slight differences in the sentiment scores of the celebrities. We also see that the median for most celebrities is concentrated very close to zero. We also see a larger spread in sentiment scores associated with Rihanna and Bill gates with the presence of more outliers for the rest of the celebrities. 
+From this boxplot, we can clearly see that there are slight differences in the sentiment scores of the celebrities. We also see that the median for most celebrities is concentrated close to zero except for Donald Trump and Beyonce whose scores are higher. We can also see that Modi's sentiment scores has the widest interquartile range and bill gate's sentiment scores has the smallest. Lastly, we see that the data contains alot of outliers for every celebrity except Modi.    
 
 
 ### Linear model
 
 
-
-
 ```{r}
 model0<- lm(score ~ 1, data = semFrame,na.action = na.exclude) # Model Without Predictor            
 model1 <- lm(score ~ Candidate, data = semFrame,na.action = na.exclude) # Model with Predictor
-pander(anova(model0, model1), caption =  "Compare if model1 which includes the independent variable provides a better fit than without(model0)")
+pander(anova(model0, model1), caption =  "Compare if model1 which includes the independent variable provides a better fit than without(model0)" )
 ```
 
 Here we use an anova function to compare two linear models, the null model where we have not provided the model with any information about the different celebrities with the extended model which includes the predictor variable or the type of celebrity. We see that the extended model has a much better fit to the data as compared to the null model and can therefore conclude that adding the information about the celebrities is a valid approach. 
@@ -133,7 +135,7 @@ Lastly, since none of the assumptions were valid, we wanted to see what would ha
 kruskal.test(score ~ Candidate, data = semFrame, na.action = na.exclude) # where y1 is numeric and A is a factor 
 ```
 
-Based on the Kruskal-Wallis rank sum test, we believe that the type of celebrity does have an impact on the sentiment scores(Chi-squared=279.98,degrees of freedom =4, p value <0.001).
+Based on the Kruskal-Wallis rank sum test, we believe that the type of celebrity does have an impact on the sentiment scores(Chi-squared=478.77,degrees of freedom =4, p value <0.001).
 
 
 ### Post Hoc analysis
@@ -142,9 +144,9 @@ pairwise.t.test(semFrame$score, semFrame$Candidate,
                 paired = FALSE, p.adjust.method = "bonferroni")
 ```
 
-Due the fact that we are testing multiple hypothesis by comparing the sentiment scores of 5 different celebrities with one another, we need to correct for our alpha level accordingly. This is because as we perform more hypothesis tests, the probability of getting a significant result simply by chance also increases. Here we have corrected for this by using the famous Bonferroni correction where simply divide our alpha level with the total number of pairwise hypotheses tests we perform. From this analysis we can see that most of the celebrities still have a significant difference in sentiment scores with a few notable exceptions such as Rihanna vs Donald Trump and Bill Gates vs Beyonce who do not possess significant differences in mean sentiment scores.
+Due the fact that we are testing multiple hypothesis by comparing the sentiment scores of 5 different celebrities with one another, we need to correct for our alpha level accordingly. This is because as we perform more hypothesis tests, the probability of getting a significant result simply by chance also increases. Here we have corrected for this by using the famous Bonferroni correction where we simply divide our alpha level with the total number of pairwise hypotheses tests we perform. From this analysis we can see that most of the celebrities still have a significant difference in sentiment scores with a few notable exceptions such as Beyonce vs Donald Trump and Bill Gates vs Modi who do not possess significant differences in mean sentiment scores.
 
 
 ### Report section for a scientific publication
 
-As can be seen in our conceptual model, we were interested in looking at the effect of the identity of a celebrity to the sentiment score based on tweets. In order to do this, we compared the base model(without the predictor variable) with a model extended with the predictor variable i.e identity of a celebrity. We saw from our anova analysis of both models that including celebrity identities did have a significant effect (F(4,4995)=59.77, p.<0.001) on the fit of our model. Furthermore, we also performed a post-hoc analysis correcting for the testing of multiple hypothesis via the bonferonni correction. We found that most celebrities still possessed a significant difference(p-value < 0.05) in mean sentiment scores with a few exceptions such as Bill Gate's sentiment score as compared to Beyonce(p-value=1.0) and Rihanna's sentiment score as compared to Modi(p-value=0.13) which was pretty interesting to see. We would also like to mention that we performed a non parametric test due to the fact that the normality and homogeinity of variance assumptions for the sentiment scores of different celebrities couldn't be validated, we found through the Kruskal Wallis rank sum test that celebrity identities do have a significant effect (χ2(4, N = 5000) = 279.98, p. < 0.001) on the fit of our model to the data. 
+As can be seen in our conceptual model, we were interested in looking at the effect of the identity of a celebrity to the sentiment score based on tweets. In order to do this, we compared the base model(without the predictor variable) with a model extended with the predictor variable i.e identity of a celebrity. We saw from our anova analysis of both models that including celebrity identities did have a significant effect (F(4,4995)=107, p.<0.001) on the fit of our model. Furthermore, we also performed a post-hoc analysis correcting for the testing of multiple hypothesis via the bonferonni correction. We found that most celebrities still possessed a significant difference(adjusted p-value < 0.05) in mean sentiment scores with a few exceptions such as Bill Gate's sentiment score as compared to Modi(adjusted p-value=1.0) and Beyonce's sentiment score as compared to Donal Trump(adusted p-value=1) which was pretty interesting to see. We would also like to mention that we performed a non parametric test due to the fact that the normality and homogeinity of variance assumptions for the sentiment scores of different celebrities couldn't be validated, we found through the Kruskal Wallis rank sum test that celebrity identities do have a significant effect (χ2(4, N = 5000) = 478.77, p. < 0.001) on the fit of our model to the data. 

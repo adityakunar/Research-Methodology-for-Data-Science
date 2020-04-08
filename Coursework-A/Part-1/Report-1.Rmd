@@ -76,7 +76,7 @@ The set up of the experiment is as follows-:
 
 1.  We gather the participants who have made themselves available for our experiment and divide them into two equal groups, the Experimental and Control groups respectively.
 
-2. We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the HAM-D test and subsequently there after we conduct the profile of mood states assessment as well, however at this stage no treatment has been provided to the experimental group.
+2. We conduct a pre test for both sample groups by making the subjects fill out a questionnaire corresponding to the profile of mood states and subsequently there after we conduct the HAM-D assessment as well, however at this stage no treatment has been provided to the experimental group.
 
 3. We then provide music therapy to the subjects in the the experimental group for a period of 4 weeks, whereas the subjects of the control group do not receive any treatment.
 
