@@ -1,5 +1,5 @@
 ---
-title: "Report Template coursework assignment A - 2020"
+title: "Coursework Assignment A - 2020"
 subtitle: "CS4125 Seminar Research Methodology for Data Science"
 author: "Sharwin Bobde (5011639), Aditya Kunar (5074274), Pavel Hoogland (4450892)"
 date: "08/04/2020"
