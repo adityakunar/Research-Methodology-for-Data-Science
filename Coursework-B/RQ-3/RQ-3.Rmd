@@ -3,10 +3,10 @@ output:
   pdf_document: default
   html_notebook: default
 ---
-# Research Question 2
+## Research Question 3
 
 
-## Observing Data
+### Observing Data
 We perform a simple look at the means of the test score of each combination of TrDs. We can from this look at which combination of training sets achieves the maximum test score.
 ```{r}
 #library(emmeans)
@@ -46,7 +46,7 @@ boxplot(t1$score,t2$score,t3$score,t4$score,t5$score,t6$score,t7$score,t8$score,
 
 From this analysis we can see that for the simple models, those trained on either TrD 5,7,8 have the best average general performance for all testdatasets. Important to note is that the scores when using TrD 2 show a observably larger variance when compared to the other sets.
 
-## Linear models
+### Linear models
 Now we make a linear model with the score and all the training data sets.
 
 ```{r}
@@ -58,7 +58,7 @@ confint(m)
 
 From this we can see that the addition of the training data sets TrD 3,4,6 is generally not of relevance for the performance score. Interestingly 4 and 6 also don't appear in the combination of sets with the maximum average test score.
 
-## Subset analysis
+### Subset analysis
 To analyze the performance that one subset adds to the overall performance we take the subset of all data where a certain training set is used and look if the performance has an observable difference.
 ```{r}
 sub1= subset(d,TrD1==1)
@@ -80,7 +80,9 @@ For the other Training sets very similar results were observed as for TrD1 thus 
 plot(sub1$TeD, sub1$score, xlab ="TeD", ylab ="Scores", main= "Performance of subset of all data with TrD1 vs TestData set")
 plot(sub2$TeD, sub2$score, xlab ="TeD", ylab ="Scores", main="Performance of subset of all data with TrD2 vs TestData set")
 ```
-## Conclusion
+
+
+### Conclusion
 
 When looking at the combinations of training sets that give the best average performance it can be seen that most of the highest ranking combinations contain the dataset TrD2 and TrD8. This can mean that for good performance on all test sets these test sets are important.
 We also perform an analysis of the effect of the amount of training sets, this shows that there is indeed a positive effect on the score with an increase in the amount of sets used.
