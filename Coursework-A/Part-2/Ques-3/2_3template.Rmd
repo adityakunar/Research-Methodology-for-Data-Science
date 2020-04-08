@@ -80,7 +80,7 @@ The p values of most Independent Variables is less than 0.05 meaning that the nu
 
 
 
-### Scatter plots Dependent and Independent variables
+### Plots Dependent and Independent variables
 We want to find if there is some relation between the dependent and independent varibale and how big this relation might be. For this we show scatter plots between dependent variable and the independent/predictor variables
 
 
@@ -182,36 +182,13 @@ pander(summary(model4))
 ```
 
 ```{r}
-pander(anova(model4))
-```
-
-```{r}
 pander(lm.beta(model4))
 ```
 From the Beta values of the model we can see that the impact of the weight variable is greater. The Beta value of weight is greater which means that a unit increase in the weight will have a greater increase in the Total amount of mercury.
 
 
-Looking also at the impact of the individual predictors on the fit:
-
 ```{r}
-pander(anova(model0, model1))
-```
-
-```{r}
-pander(anova(model0, model2))
-```
-
-
-```{r}
-pander(summary(model7))
-```
-
-```{r}
-pander(lm.beta(model7))
-```
-
-```{r}
-pander(confint(model7))  
+pander(confint(model4))  
 ```
 The confidence interval values can be interpreted such that with a 2.5% chance the values will be lower than the given value for the variable and with 97.5% it will be lower than the value given in that column. meaning that with a 95% chance the value of the parameter will be between the given values.
 
@@ -285,12 +262,13 @@ fisherM$dfbeta<-dfbeta(model4)
 fisherM$leverage<-hatvalues(model4)
 fisherM$cooks<-cooks.distance(model4)
 
+print(fisherM$cooks)
 
 troublingdata<-subset(fisherM, (leverage > 3*.022) | (abs(stud.res) > 2), 
                       select = c("leverage", "stud.res", "dfbeta"))
-
-head(troublingdata)
+print(troublingdata)
 ```
+
 
 
 We also plot the Residuals vs the leverage, there would be reason for concern if a point is above the dotted red line in the top right. However as can be seen in the plot below this is not the case.
