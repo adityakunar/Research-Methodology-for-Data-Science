@@ -23,7 +23,7 @@ Many people consider music to be a stress relieving agent that can be used to ac
 
 ## The theory underlying the research
 
-Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as ?a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change? [5].
+Kenneth E. Bruscia, who is Emeritus Professor of Music Therapy has defined the use of music therapy as a systematic process of intervention wherein the therapist helps the client to promote health, using musical experiences and the relationships that develop through them as dynamic forces of change? [5].
 
 Music therapy essentially works through the modulation of our attention, emotions, cognition, behavior and communication via the use of musical experiences or pleasant sounds[6].
 
@@ -36,7 +36,7 @@ As for studies concerning depression, the Hamilton Rating Scale for Depression f
 
 1. Is there a difference in the depression level of a subject who has undergone the treatment of listening to music as compared to a subject who hasn't received any treatment? (Main research question)
 
-2. Is there an affect on the mood of an individual based on the treatment and does the mood then have any correspondance to the depression score?
+2. Is there an affect on the mood of an individual based on the treatment and does the mood then have any correspondence to the depression score?
 
 3. What is the influence of musical properties in the effectiveness of the treatment ?
 
