@@ -7,12 +7,9 @@ output:
 
 *Question: What is the effect of different strategies to simultaneously learn one model from multiple TrD’s?*
 
-For answering this question we need to evaluate the effect of the transfer lerning methods (MN, M1, M2, M3, MF) and the simple model (S) on the score. We will then perform significance tests to see if there is a significant difference between the methods. We will aslo see how The Methods perform on specific tasks/TeD.  
+For answering this question we need to evaluate the effect of the transfer lerning methods (MN, M1, M2, M3, MF) and the simple model (S) on the score. We will then perform significance tests to see if there is a significant difference between the methods. We will aslo see how the Methods perform on specific tasks/TeD.  
 
-## Reading the data
-
-We read the data and create the resevent subset (d) for the current research quetsion. We are **not** going to analyse the baselines here because we *only want to observe effect of different strategies when learning from ***multiple TrD**
-```{r}
+```{r include=FALSE}
 library('ggplot2')
 library('emmeans')
 data = read.csv('../data/data.csv')
