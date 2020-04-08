@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## The motivation for the planned research 
 
-Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. In fact, music is a key element of one?s everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
+Many people consider music to be a stress relieving agent that can be used to accompany them while they work or study. In fact, music is a key element of one's everyday life. Thus, our motivation for this research is to see if music can act as a therapeutic medicine to improve the mental health of an individual and possibly alleviate depression.
 
 ## The theory underlying the research
 
