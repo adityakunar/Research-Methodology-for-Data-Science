@@ -1,7 +1,7 @@
 ---
 output:
   pdf_document: default
-  html_notebook: default
+
 ---
 # Research Question 2
 
@@ -17,12 +17,12 @@ d = subset(data, model %in% c('MN', 'M1', 'M2', 'M3', 'MF', 'S'))
 ```
 
 ## Observing the distribution of scores by models
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(model, score)) + geom_boxplot(notch = FALSE)
 ```
 We can see that transfer learning methods' mean performance is better over the simple model *(disregarding all the other independent variables and the interaction effects)*. But we need stronger tests than this.
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(score)) + geom_histogram(binwidth = 0.01) + facet_wrap(~model)
 ```
 We see that the scores for the methods are not normally distributed. Thus, we cannot depend on the mean alone.
@@ -30,7 +30,7 @@ We see that the scores for the methods are not normally distributed. Thus, we ca
 
 Let us observe the effect of other independent variables (test dataset) on the score
 
-```{r}
+```{r echo=FALSE}
 ggplot(d, aes(model, score)) + geom_boxplot(notch = FALSE) + facet_wrap(~TeD)
 ```
 We see that except TeD5, the use of different test datasets and tasks result in observably significant variations in performance in different models.
@@ -39,7 +39,7 @@ We see that except TeD5, the use of different test datasets and tasks result in 
 Because the 5 Mx methods were implimented using randamization in selection of training set we are not considering the effect of selection of the training set here. Our purpose here is to **only compare methods against each other considering consistent testing strategy for evaluation on the same test set/task and consistent (emperically comparable) scoring method**. \
 
 Lets create a simple linear model and observe the coefficients and confidence intervals.
-```{r}
+```{r echo=FALSE}
 m = lm(score ~ model+TeD, d)
 summary(m)
 confint(m)
@@ -48,7 +48,7 @@ We see that the both Method of training and choice of TeD have a significant eff
 
 ### Interaction Effect
 Let us observe the interaction effect of the TeD and method on the score.
-```{r}
+```{r echo=FALSE}
 m = lm(score ~ model*TeD, d)
 summary(m)
 ```
@@ -56,7 +56,7 @@ We can see that indeed there is significant interaction effect. We cannot do fur
 
 # Pairwise comparisons for Models
 We need to perform pairwise comparisons while making adjustments for experiment design issues (interaction effects of TeD).
-```{r}
+```{r echo=FALSE}
 m = lm (score ~model*TeD, d)
 emmeans(m, ~model)
 ```
@@ -64,7 +64,7 @@ emmeans(m, ~model)
 The estimated marginal means(EMMs) tell us that the mean method performance, averaged over the test dataset used, is in the order:
 $$ MN > M3 > M2 > M1 > MF > S $$
 We can check pairwise comparison of the methods for understanding how significant these rankings are.
-```{r}
+```{r echo=FALSE}
 emmeans(m, pairwise~model)
 ```
 We observe the following:
@@ -80,13 +80,13 @@ We observe the following:
 Lets also account for the performance of models depending on different tasks (TeD) the models have to perform.
 
 **Means for particular TeDs:**
-```{r}
+```{r echo=FALSE}
 emmeans(m, pairwise~model|TeD)$emmeans
 ```
 
 
 **Comtrasts for particular TeDs:**
-```{r}
+```{r echo=FALSE}
 emmeans(m, pairwise~model|TeD)$contrasts
 ```
 
