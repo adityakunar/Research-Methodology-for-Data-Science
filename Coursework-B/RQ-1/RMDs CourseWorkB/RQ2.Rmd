@@ -1,0 +1,168 @@
+---
+output:
+  pdf_document: default
+
+---
+# Research Question 2
+
+*Question: What is the effect of different strategies to simultaneously learn one model from multiple TrD’s?*
+
+For answering this question we need to evaluate the effect of the transfer lerning methods (MN, M1, M2, M3, MF) and the simple model (S) on the score. We will then perform significance tests to see if there is a significant difference between the methods. We will aslo see how the Methods perform on specific tasks/TeD.  
+
+```{r include=FALSE}
+library('ggplot2')
+library('emmeans')
+data = read.csv('../data/data.csv')
+d = subset(data, model %in% c('MN', 'M1', 'M2', 'M3', 'MF', 'S'))
+```
+
+## Observing the distribution of scores by models
+```{r echo=FALSE}
+ggplot(d, aes(model, score)) + geom_boxplot(notch = FALSE)
+```
+We can see that transfer learning methods' mean performance is better over the simple model *(disregarding all the other independent variables and the interaction effects)*. But we need stronger tests than this.
+
+```{r echo=FALSE}
+ggplot(d, aes(score)) + geom_histogram(binwidth = 0.01) + facet_wrap(~model)
+```
+We see that the scores for the methods are not normally distributed. Thus, we cannot depend on the mean alone.
+
+
+Let us observe the effect of other independent variables (test dataset) on the score
+
+```{r echo=FALSE}
+ggplot(d, aes(model, score)) + geom_boxplot(notch = FALSE) + facet_wrap(~TeD)
+```
+We see that except TeD5, the use of different test datasets and tasks result in observably significant variations in performance in different models.
+
+## Simple Significance Tests
+Because the 5 Mx methods were implimented using randamization in selection of training set we are not considering the effect of selection of the training set here. Our purpose here is to **only compare methods against each other considering consistent testing strategy for evaluation on the same test set/task and consistent (emperically comparable) scoring method**. \
+
+Lets create a simple linear model and observe the coefficients and confidence intervals.
+```{r echo=FALSE}
+m = lm(score ~ model+TeD, d)
+summary(m)
+confint(m)
+```
+We see that the both Method of training and choice of TeD have a significant effect on the score. Therefore it is also wise to perform an interaction analysis.
+
+### Interaction Effect
+Let us observe the interaction effect of the TeD and method on the score.
+```{r echo=FALSE}
+m = lm(score ~ model*TeD, d)
+summary(m)
+```
+We can see that indeed there is significant interaction effect. We cannot do further analysis just using coefficients. We need to separate instances depending on TeD and see how the models comparatively perform.
+
+# Pairwise comparisons for Models
+We need to perform pairwise comparisons while making adjustments for experiment design issues (interaction effects of TeD).
+```{r echo=FALSE}
+m = lm (score ~model*TeD, d)
+emmeans(m, ~model)
+```
+
+The estimated marginal means(EMMs) tell us that the mean method performance, averaged over the test dataset used, is in the order:
+$$ MN > M3 > M2 > M1 > MF > S $$
+We can check pairwise comparison of the methods for understanding how significant these rankings are.
+```{r echo=FALSE}
+emmeans(m, pairwise~model)
+```
+We observe the following:
+
+- Using any transfer learning method (Mx) is better than using the simple model (S) i.e. (obs. p < 0.0001).
+- Changing method between M1 to M2 (obs. p = 0.5818)  OR M2 to M3 (obs. p = 0.5801) only gives slight improvements.
+- Using MN over M3 gives marginally significant (obs. p = 0.0500) performance improvement.
+- Using MN over {M1, M2, MF, S} gives highly significant (obs. p < 0.0001) performance improvement.
+
+
+## Pairwise comparison for Models per TeD
+
+Lets also account for the performance of models depending on different tasks (TeD) the models have to perform.
+
+**Means for particular TeDs:**
+```{r echo=FALSE}
+emmeans(m, pairwise~model|TeD)$emmeans
+```
+
+
+**Comtrasts for particular TeDs:**
+```{r echo=FALSE}
+emmeans(m, pairwise~model|TeD)$contrasts
+```
+
+### For TeD1 (Classification task)
+Looking simply at means:
+$$ M3 > M1 > M2 > MN > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- There is significant difference on moving from S to Mx (obs. p < 0.0001)
+- {MN, M1, M2, M3} result in  similar performance $(obs. p \in [0.0578, 1.0] )$
+- Only for this task MN performs worse than {M1, M2, M3}. But judging by previous point this is not too significant.
+
+
+### For TeD2 (Classification task)
+Looking simply at means:
+$$ MN > M3 > M1 > M2 > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- {MN, M1, M2, M3} do not show much performance difference $obs. p \in [0.9087, 1.0])$
+- MF and MS perform similarly (obs. p = 0.9995)
+- There is significant difference between {MN, M1, M2, M3} and {MF, MS} $(obs. p \in [0.0089, 0.01])$
+
+### For TeD3 (Classification task)
+Looking simply at means:
+$$ MN > M3 > M2 > M1 > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- In the above, going from MN to M1 with 1 step jump there isn't too much score change (obs. p > 0.09)
+- There is a significant difference with a jump from M1 to MF (obs. p = 0.0027)
+- Again, all Mx are better than S (obs. p < 0.0409)
+
+
+### For TeD4 (Classification task)
+Looking simply at means:
+$$ MN > M2 > M1 > M3 > S > F $$
+After looking at contrasts, with reference to the ranking above:
+
+- {M1, M2, M3} perform similarly (obs. p > 0.9)
+- MN performs significantly better than any other method (obs. p < 0.04)
+- An oddity where S performs better than MF, *but with marginal insignificance (obs. p = 0.0667).*
+
+### For TeD5 (Recommendation task)
+Looking simply at means:
+$$ MN > M3 > M2 > M1 > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- {M1, M2, M3, MF, MN, S} all perform very similarly (obs. p > 0.86). 
+- Overall **no significant different in score based on learning method used**.
+- This meets our prior expectation from observing the data graphically.
+
+### For TeD6 (Regression task)
+Looking simply at means:
+$$ MN > M2 > M1 > M3 > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- {MN, M1, M2, M3} perform sililarly (obs. p > 0.57)
+- There is a stark degradation when juping from M3 to MF (obs. p < 0.001)
+- Again, S is significantly inferior to all Mx (obs. p < 0.008)
+
+
+### For TeD7 (Regression task)
+Looking simply at means:
+$$ MN > M3 > M2 > M1 > MF > S $$
+After looking at contrasts, with reference to the ranking above:
+
+- {MN, M2, M3} perform sililarly (obs. p > 0.54)
+- Stark degredation in score on going from M2 to M1 (obs. p = 0.0137), showing thats tuning parts refined is give better performance.
+- Again, S is significantly inferior (obs. p < 0.0007).
+
+
+## RQ-2 Conclusion
+In general, transfer learning is better than a simple model trained with a single dataset (obs. p < 0.0001). No retraining for the specific TeD (MN) performed significantly better (obs. p < 0.05) than the simple model or any form of refininf. 
+
+For particular testsets and tasks transfer learning significantly was better in most cases (6 out of 7). For one recommendation task (TeD5) the choice of the methods did not show any significant difference in performance. For the regresion tasks no refinement (MN) worked very similarly (obs. p > 0.86) as refining 2 and 3 parts(M2, M3).
+
+
+
+
+
