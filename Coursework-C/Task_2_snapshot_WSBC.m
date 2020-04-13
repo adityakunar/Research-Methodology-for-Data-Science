@@ -30,7 +30,7 @@ plot_2d_scatter(Y * mapping, labels,  labels, "PCA with all samples");
 %%
 
 % Test bench (Consistent prior sampling)
-sample_rate = 0.3;
+sample_rate = 0.001;
 [snapshot, snap_labs] = get_constant_prior_snapshot(X, labels, sample_rate); % sample only 20% of datafrom each class
 disp("snapshot size = " + size(snapshot,1) * size(snapshot,2))
 %plot_labels_distribution(snap_labs, "Consistent class sampling target distribution");

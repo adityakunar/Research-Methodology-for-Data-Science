@@ -1,7 +1,7 @@
 clear
 clc
 %read in the data in matlab.
-X = readtable('BC.csv');
+X = readtable('./data/wdbc.data.csv');
 T = X(:, 3:end);
 labels = X(:,2);
 labels =table2array(labels);
@@ -9,7 +9,7 @@ data = table2array(T);
 
 s = RandStream('mlfg6331_64'); 
 
-k = int16(.30*size(data,2));
+k = int16(.25*size(data,2));
 
 disp(k);
 
@@ -22,6 +22,7 @@ l=size(L,2);
 Index = 1 : size(data,2);
 
 FirstL = data(:,L);
+disp("First L size = " +  size(FirstL,1) * size(FirstL,2))
 
 RMI = setdiff(Index,L);
 
@@ -68,33 +69,45 @@ for a = RMI
     k=k+1;
 end
 
-dot(PCA(:,1),PCA(:,2))
+disp("dot product = " + dot(PCA(:,1),PCA(:,2)) )
 
 ReducedData = data * PCA;
 
-corrcoef(ReducedData)
 
-var(ReducedData)/sum(var(ReducedData))
+plot_2d_scatter(ReducedData, labels, labels, "WBCD Nystrom")
 
+%%
 
-plot_2d_scatter(ReducedData, labels, "WBCD Nystrom")
-
-function plot_2d_scatter(x, labels, t)
-    classes = unique(labels);
+function plot_2d_scatter(x, lab, orig_lab, t)
+    classes = unique(orig_lab);
     num_classes = size(classes, 1);
     
-    colmap = ["g", "r", "b", "y", "m"];
+    colmap = lines(num_classes);
+    width=1000;
+    height=800;
     
     figure();
+    c = [];
     for i = 1:num_classes
-        indexes = find(strcmp(labels, classes(i)));
-        scatter(x(indexes,1), x(indexes,2),colmap(i));
+        if isa(lab, 'double') || isa(lab, 'int')
+            indexes = find(lab == classes(i)); % type double
+        else
+            indexes = find(strcmp(lab, classes(i))); % type cell
+        end
+        
+        if size(indexes,1) <= 0
+            continue
+        end
+        
+
+        scatter(x(indexes,1), x(indexes,2),[], colmap(i,:), 'DisplayName', string(classes(i)), 'MarkerFaceAlpha',.6,'MarkerEdgeAlpha',.6);
         hold on
-        c = mean(x(indexes,:));
-        text(c(1), c(2), classes(i))
+        c = mean(x(indexes, :));
+        text(c(1), c(2), string(classes(i)),'FontSize', 16 )
         hold on
-    
     end
+    
+    legend()
+    set(gcf,'position',[0,0,width,height]);
     title(t);
 end
-

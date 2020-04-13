@@ -2,8 +2,8 @@ clear all
 close all
 
 data = readtable('./data/mnist_train.csv');
-X = data( :, 2:(size(data,2)));
-labels = data(:, 1);
+X = data( 2:end, 3:end);
+labels = data(2:end, 1);
 
 X = table2array(X);
 labels = table2array(labels);
@@ -11,6 +11,8 @@ labels = table2array(labels);
 Y = center_points(X);
 
 data_desc = "MNIST ";
+disp(unique(labels))
+disp(size(Y))
 %%
 
 
