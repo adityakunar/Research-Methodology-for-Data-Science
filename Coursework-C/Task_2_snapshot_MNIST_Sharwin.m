@@ -16,6 +16,7 @@ data_desc = "MNIST ";
 %%
 disp(unique(labels));
 disp(size(X));
+disp(size(labels));
 
 %%
 % Full blown PCA
@@ -29,11 +30,12 @@ plot_2d_scatter(Y * mapping, labels,  labels, "PCA with all samples");
 %%
 
 % Test bench (Consistent prior sampling)
-sample_rate = 0.1;
+sample_rate = 0.01;
 [snapshot, snap_labs] = get_constant_prior_snapshot(X, labels, sample_rate); % sample only 20% of datafrom each class
 plot_labels_distribution(snap_labs, "Consistent class sampling target distribution");
 
 [snap_Y, snap_mapping] = Gram_PCA(snapshot, 2);
+disp("dot product = " + dot(snap_mapping(:,1),snap_mapping(:,2)))
 
 plot_2d_scatter(snap_Y * snap_mapping, snap_labs, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
 plot_2d_scatter(Y * snap_mapping, labels, labels, join(['Full data S-PCA with ', string(sample_rate*100), '% sampling per class'], ""));
@@ -46,6 +48,7 @@ sample_rate = 0.1;
 plot_labels_distribution(snap_labs, "Random sampling target distribution");
 
 [snap_Y, snap_mapping] = Gram_PCA(snapshot, 2);
+disp("dot product = " + dot(snap_mapping(:,1),snap_mapping(:,2)))
 
 plot_2d_scatter(snap_Y * snap_mapping, snap_labs, labels, join(['Snapshot S-PCA with ', string(sample_rate*100), '% Random sampling'], ""));
 plot_2d_scatter(Y * snap_mapping, labels,labels,  join(['Full Data S-PCA with ', string(sample_rate*100), '% Ransom sampling'], ""));

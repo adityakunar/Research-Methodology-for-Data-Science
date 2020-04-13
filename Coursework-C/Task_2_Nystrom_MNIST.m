@@ -1,12 +1,14 @@
 clear all
 close all
 
-data = readtable('./data/mnist_train.csv');
-X = data( 2:end, 3:end);
-labels = data(2:end, 1);
+T = readtable('Mnist.csv');
 
-X = table2array(X);
-labels = table2array(labels);
+X = table2array(T);
+X = X(2:end,1:end);
+
+Labels = readtable('MNIST_labels.csv');
+labels = table2array(Labels);
+labels = labels(1:end);
 
 Y = center_points(X);
 
@@ -14,21 +16,32 @@ data_desc = "MNIST ";
 disp(unique(labels))
 disp(size(Y))
 %%
+disp(unique(labels));
+disp(size(Y));
+disp(size(labels));
 
+%%
+close all
 
-L = 1:100:784; % selected features
+sampling_rate = 0.1;
+
+s = RandStream('mlfg6331_64'); 
+k = int16(sampling_rate * size(Y,2));
+select_indexes = datasample(s, 1:size(Y,2), k, 'Replace',false);
+L = select_indexes;
+disp("size L = " + size(L));
 
 [PCA, Newdata] = calc_mapping(L, Y);
 
-disp("dot product = " + dot(PCA(:,1),PCA(:,2)))
+disp("dot product = " + dot(PCA(:,1),PCA(:,2)));
 
 ReducedData = Newdata * PCA;
 
-corrcoef(ReducedData)
+%corrcoef(ReducedData)
 
-var(ReducedData)/sum(var(ReducedData));
+%var(ReducedData) / sum(var(ReducedData))
 
-plot_2d_scatter(ReducedData, labels, labels, "Nystrom Iris")
+plot_2d_scatter(ReducedData, labels, labels, join(["Nystrom MNIST ", sampling_rate*100, "% sampling"]))
 %%
 %=================================================================================
 
@@ -74,6 +87,7 @@ function [PCA, Newdata] = calc_mapping(L, data)
     Index = 1 : size(data,2);
 
     FirstL = data(:,L);
+    disp("First L size = " +  size(FirstL,1) * size(FirstL,2));
 
     RMI = setdiff(Index,L);
 
@@ -102,6 +116,7 @@ function [PCA, Newdata] = calc_mapping(L, data)
     U_B = NyCovB * U_A * inv(eigvalsorted); 
 
     PCA_Mat = [U_A; U_B];
+    %{
     disp("NyCovB")
     disp(NyCovB(1:10, :))
     
@@ -110,7 +125,8 @@ function [PCA, Newdata] = calc_mapping(L, data)
     
     disp("inv(eigvalsorted)")
     disp(inv(eigvalsorted))
-
+    %}
+    
     PCA = zeros(size(PCA_Mat));
 
     k = 1;   
