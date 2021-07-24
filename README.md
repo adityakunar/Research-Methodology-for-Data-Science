@@ -1,11 +1,7 @@
 # Seminar Data Science
 
-Store data in ./Coursework C/data/
+Coursework A- Linear regression, Logistic regression, Statisitical Modelling through linear models, Mutlilevel modelling. 
 
-* data for Coursework C 
-  * Task 2a (Snapshot PCA)
-    * Iris (low dimensions for fast testing and implementation): https://archive.ics.uci.edu/ml/machine-learning-databases/iris/
-    * Arrhythmia: https://archive.ics.uci.edu/ml/machine-learning-databases/arrhythmia/
-    * Internet Advertisements: https://archive.ics.uci.edu/ml/machine-learning-databases/internet_ads/
-    * MNIST: http://yann.lecun.com/exdb/mnist/
+Coursework B- Hypothesis Testing, Understanding how to explore data and find insights in R. 
 
+Coursework C- Applied PCA and used approximations such as Nystrom for optimized performance on high dimensional data as well as compared it to multi-dimensional and tsne.
