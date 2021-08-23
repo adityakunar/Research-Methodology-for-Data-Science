@@ -1,4 +1,4 @@
-# Seminar Data Science
+# Research Methodology for Data Science
 
 Coursework A- Linear regression, Logistic regression, Statisitical Modelling through linear models, Mutlilevel modelling. 
 
