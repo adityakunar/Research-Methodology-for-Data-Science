@@ -1,6 +1,6 @@
 # Research Methodology for Data Science
 
-Coursework A- Linear regression, Logistic regression and mutlilevel modelling in R
+Coursework A- Linear regression, logistic regression and mutlilevel modelling in R
 
 Coursework B- Data exploration and hypothesis testing in R
 
